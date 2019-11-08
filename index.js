@@ -3,12 +3,14 @@ var app = express();
 var path = require('path');
 //SQLite3 initialization
 var db;
-const sqlite3 = require("sqlite3").verbose();
+const sqlite3 = require("sqlite3");
+
+
 
 startupDB();
 function startupDB(){
     
-    db = new sqlite3.Database('/dbs/main.db', (err) => {
+    db = new sqlite3.Database('dbs/main.db', (err) => {
         if (err) {
             console.error(err.message);
         }
@@ -56,3 +58,39 @@ app.get("/shutdown/:password", (req,res)=>{
     console.log("DB closed")
     res.send("Database Closed");
 });
+
+
+app.post("/login",(req,res)=>{
+
+    let data = req.body;
+    let name = String(data.username);
+    let password = String(data.password);
+
+    console.log(name,password)
+    var access = false;
+    let sql = `SELECT * FROM users
+    ORDER BY username ASC`;
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        
+        for(let i = 0; i < rows.length; i++){
+            
+            if(rows[i]["username"] == name){
+                
+                if(rows[i]["password"] == password){
+                    access = true;
+                    console.log("Acess")
+                    break
+                }
+            }
+        }
+        res.send(access);
+        
+    
+    });
+    
+
+    });
