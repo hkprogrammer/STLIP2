@@ -5,12 +5,92 @@
     <meta author="Hitoki Kidahashi">
     <meta contact="hitokikidahashi@student.midpac.edu">
     <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
-    <link href="../../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <script src="controls.js"></script>
+    <style>
+        a img{
+            cursor:pointer;
+        }
+        a{
+            cursor:pointer;
+        }
+    </style>
 </head>
 <body>
 
 
-    <div></div>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-8" >
+                    <!--Main Headers(Name, Avatar, Infos)-->
+
+                    <img width="50px" src="../../images/avatar.jpg">
+                    <h3 id="username">{username}</h3>
+                
+                </div>
+                <div class="col-4">
+                    <!--Side Informations-->
+                    
+
+
+                </div>
+            </div>
+            <hr>
+            <br>
+            <br>
+            <!--Main Display Page-->
+            <div class="row">
+                <div class="col-6">
+                    <!--Peer Tutors Controling-->
+                    <table class="table">
+                        <tr>
+                            <td>#</td>
+                            <td width="30%">Name</td>
+                            <td>role</td>
+                            <td width="20%">modify name</td>
+                            <td>delete</td>
+                        </tr>
+                        <tr>
+                            <td>{#}</td>
+                            <td>{Name}</td>
+                            <td>
+                                <select>
+                                    <option value="Tutor">Tutor</option>
+                                    <option value="------">-----</option>
+                                    <option value="Student">Student</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a onclick="edit(this.parent.parent.childnodes[1].innerHTML)" class="btn btn-sm btn-info "><img src="../../images/rename.png" height="25spx">
+                                </a>
+                            </td>
+                            <td>
+                                <a onclick="del(this.parent.parent.childnodes[1].innerHTML)" class="btn btn-sm btn-danger "><img src="../../images/delete.png" height="25spx">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--Add Usr-->
+                            <td colspan="5"><a onclick="addUsr()" class="btn btn-sm btn-secondary" style="font-size:15px; font-weight:bold; color:white">+ Add a peer tutor</a></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <div class="col-6">
+                    <!--Upcoming Events Controlling-->
+
+
+
+                </div>
+            </div>
+            <div id="calendar">
+                <!--Selectable Calendar To add in sessions-->
+            </div>
+            </div>
+        </div>
+
+    </div>
 
 </body>

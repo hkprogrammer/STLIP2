@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+
+    <title>Terminal Control</title>
+    <meta author="Hitoki Kidahashi">
+    <meta contact="hitokikidahashi@student.midpac.edu">
+    <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <style>
+        .subjbut{
+            background-color:#007bff;
+          
+        }
+        .subjbut:hover{
+        
+            background-color:#007bff;
+            text-decoration: none;
+        }
+        
+    
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Peer Tutor Sign-up</h2>
+            <hr>
+            <input type="name" id="name" placeholder="Student Name">
+            <select>
+                <option value="none">Grade Level</option>
+                <option value="-----">-----</option>
+                <option value=""></option>
+                <option value="9">Freshman</option>
+                <option value="10">Sophomore</option>
+                <option vlaue="11">Junior</option>
+                <option value="12">Senior</option>
+            </select>
+            <input type="email" id="email" placeholder="Student Email" size="30px">
+            <br>
+            <br>
+            <input type="subject" id="subject" placeholder="Subject">
+            <div style="border-color: black; border:1px;" id="subj">
+                <!--Fit in adding subjects, save in localstorage.-->
+                
+                
+                <!--
+                    <a class="btn btn-sm btn-primary subjbut"><span style="color:white;">{Subject}</span></a>
+
+                -->
+            </div>
+            <br>
+            <br>
+            <hr>
+            <div class="row">
+                <div class="col-10"><a class="btn btn-info" onclick="submit()">Save & Submit</a></div>
+                <div class="col-2"><a class="btn btn-warning" onclick="reset()">Reset</a></div>
+            </div>  
+        
+        </div>
+    </div>
+
+
+</body>

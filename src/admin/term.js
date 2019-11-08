@@ -38,6 +38,6 @@ function loadDoc(a,b) {
 function changePage(l){
     console.log(l)
     if(l == "adminUsr"){
-        location.replace("/controll")
+        location.replace("/admin/controll/")
     }
 }
