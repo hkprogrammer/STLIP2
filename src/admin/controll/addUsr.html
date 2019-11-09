@@ -9,7 +9,8 @@
     <style>
         .subjbut{
             background-color:#007bff;
-          
+            margin-left: 5px;
+            margin-top:10px;
         }
         .subjbut:hover{
         
@@ -19,7 +20,7 @@
         
     
     </style>
-    
+   
 </head>
 <body>
 
@@ -28,13 +29,14 @@
             <h2>Peer Tutor Sign-up</h2>
             <hr>
             <input type="name" id="name" placeholder="Student Name">
-            <select>
+            <select id="grade">
                 <option value="none">Grade Level</option>
                 <option value="-----">-----</option>
                 <option value=""></option>
+                <option value=""></option>
                 <option value="9">Freshman</option>
                 <option value="10">Sophomore</option>
-                <option vlaue="11">Junior</option>
+                <option value="11">Junior</option>
                 <option value="12">Senior</option>
             </select>
             <input type="email" id="email" placeholder="Student Email" size="30px">
@@ -61,5 +63,6 @@
         </div>
     </div>
 
-
+    <script src="addUsr.js">
+    </script>
 </body>

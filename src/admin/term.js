@@ -17,12 +17,17 @@ function loadDoc(a,b) {
        
         if(this.responseText == "true"){
             
+            localStorage.setItem("username",a);
             changePage("adminUsr");
             console.log("acess");
         }
         else{
            
             document.getElementById("invalidmsg").style.visibility = "visible";
+            console.log(this.responseText)
+            if(this.responseText == "level"){
+                document.getElementById("invalidmsg").innerHTML = "You are not admin"
+            }
         }
 
         

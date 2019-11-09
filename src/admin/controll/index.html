@@ -6,7 +6,7 @@
     <meta contact="hitokikidahashi@student.midpac.edu">
     <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
-    <script src="controls.js"></script>
+    
     <style>
         a img{
             cursor:pointer;
@@ -26,7 +26,7 @@
                     <!--Main Headers(Name, Avatar, Infos)-->
 
                     <img width="50px" src="../../images/avatar.jpg">
-                    <h3 id="username">{username}</h3>
+                    <h3 id="headingname">{username}</h3>
                 
                 </div>
                 <div class="col-4">
@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-6">
                     <!--Peer Tutors Controling-->
-                    <table class="table">
+                    <table class="table" id="tutorslist">
                         <tr>
                             <td>#</td>
                             <td width="30%">Name</td>
@@ -92,5 +92,5 @@
         </div>
 
     </div>
-
+    <script src="controls.js"></script>
 </body>
