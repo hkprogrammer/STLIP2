@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8' />
-<link href='../packages/core/main.css' rel='stylesheet' />
-<link href='../packages/daygrid/main.css' rel='stylesheet' />
-<link href='../packages/timegrid/main.css' rel='stylesheet' />
-<script src='../packages/core/main.js'></script>
-<script src='../packages/interaction/main.js'></script>
-<script src='../packages/daygrid/main.js'></script>
-<script src='../packages/timegrid/main.js'></script>
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
+
+   
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
@@ -21,7 +10,7 @@
         center: 'title',
         right: 'dayGridMonth'
       },
-      defaultDate: '2019-08-12',
+      
       navLinks:  false, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
@@ -57,26 +46,9 @@
     calendar.render();
   });
 
-</script>
-<style>
-
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-</style>
-</head>
-<body>
-
-  <div id='calendar'></div>
-
-</body>
-</html>
+var s = new Date();
+var m = Number(s.getMonth()) + 1;
+var f = "2019" + "-" + m + "-" + s.getDate();
+console.log({s,f});
+console.log(typeof(f));    
+localStorage.setItem("date", f);

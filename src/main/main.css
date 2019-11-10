@@ -1,0 +1,53 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(../fonts/montserrat/Montserrat-Light.otf);
+}
+
+body{
+    font-family: Montserrat;
+    background: rgb(22,90,80);
+    background: linear-gradient(90deg, rgba(22,90,80,1) 0%, rgba(175,177,95,1) 100%);
+    background-size:100%;
+    
+    color:white;
+    width:100%;
+}
+.row{
+    width:100%;
+}
+body h1, body h3,body h4{
+    font-weight:bold;
+}
+.box{
+    background-color:#1D262D;
+    box-shadow: 2px 2px 8px black;
+    margin-top: 4.5%;
+    margin-left:5%;
+    margin-right:5%;
+}
+#welcome{
+    
+    width:90%;
+    height: 200px;
+}
+.navbar ul li a{
+    color:white;
+    text-decoration: none;
+    font-size: 27px;
+    
+}
+hr{
+    border-top: 1px solid lightgrey;
+}
+.navbar ul li a:hover{
+    color:lightgrey;
+}
+.container{
+    padding: 2%;
+}
+#calendar{
+    width:70%;
+}
+#calendarbox{
+    height:90%;
+}

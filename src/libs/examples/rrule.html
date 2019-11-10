@@ -5,53 +5,44 @@
 <link href='../packages/core/main.css' rel='stylesheet' />
 <link href='../packages/daygrid/main.css' rel='stylesheet' />
 <link href='../packages/timegrid/main.css' rel='stylesheet' />
+<link href='../packages/list/main.css' rel='stylesheet' />
+<script src='../vendor/rrule.js'></script>
 <script src='../packages/core/main.js'></script>
 <script src='../packages/interaction/main.js'></script>
 <script src='../packages/daygrid/main.js'></script>
 <script src='../packages/timegrid/main.js'></script>
+<script src='../packages/list/main.js'></script>
+<script src='../packages/rrule/main.js'></script>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list', 'rrule' ],
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
       },
       defaultDate: '2019-08-12',
-      navLinks:  false, // can click day/week names to navigate views
-      selectable: true,
-      selectMirror: true,
-      select: function(arg) {
-        var title = prompt('Event Title:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
-      },
       editable: true,
-      eventLimit: true, // allow "more" link when too many events
       events: [
-        // {
-        //   title: 'All Day Event',
-        //   start: '2019-08-01'
-        // },
-        
-        // {
-        //   groupId: 999,
-        //   title: 'Repeating Event',
-        //   start: '2019-08-09T16:00:00'
-        // },
-       
-      ]
+        {
+          title: 'rrule event',
+          rrule: {
+            dtstart: '2019-08-09T13:00:00',
+            // until: '2019-08-01',
+            freq: 'weekly'
+          },
+          duration: '02:00'
+        }
+      ],
+      eventClick: function(arg) {
+        if (confirm('delete event?')) {
+          arg.event.remove()
+        }
+      }
     });
 
     calendar.render();
