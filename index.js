@@ -79,7 +79,7 @@ app.get("/checkTutors", (req,res)=>{
 
 });
 
-app.post("/login",(req,res)=>{
+app.post("/adminLogin",(req,res)=>{
 
     let data = req.body;
     let name = String(data.username);
@@ -144,29 +144,29 @@ app.post("/addTutor", (req,res)=>{
             throw err;
         }
         
-        console.log(rows[0]["count"]);
+        //console.log(rows[0]["count"]);
         c = Number(rows[0]["count"]);
         
         f = c + 1
         sql = `UPDATE IDs SET count=${f} WHERE count=${c}`
         db.run(sql, function(err) {
             if (err) {
-            return console.log(err.message);
+                console.log(err.message);
             }
             // get the last insert id
            
         });
         sql = `INSERT INTO users(username,email,grade,subjects,ID,password,level) VALUES(\"${name}\",\"${email}\",${grade},\"${subject}\",\"${f}\","StudyBuddies2019",3)`
-        console.log(sql);
+        //console.log(sql);
         db.run(sql, function(err) {
             if (err) {
-            return console.log(err.message);
+                console.log(err.message);
             }
             id = f;
             // get the last insert id
-            console.log(`A row has been inserted with rowid ${this.lastID}`);
-            console.log("Adding Student " + name);
-            console.log({name,grade,email,subject,id,"status":"success"});
+            //console.log(`A row has been inserted with rowid ${this.lastID}`);
+            //console.log("Adding Student " + name);
+            //console.log({name,grade,email,subject,id,"status":"success"});
             res.send({name,grade,email,subject,id,"status":"success"});
         });
     });
@@ -185,7 +185,7 @@ app.delete("/delTutor",(req,res)=>{
 
     var data = req.body;
     var name = data.name;
-    console.log(data);
+    //console.log(data);
     
     if(name != "admin"){
         let sql = `DELETE FROM users WHERE username=${name}`
@@ -207,7 +207,7 @@ app.delete("/delTutor",(req,res)=>{
                 let final = number - 1;
                 if(final < 0){
                     //no operations
-                    console.log("count negative")
+                    //console.log("count negative")
                     res.send("Invalid Operation, Negative Count. Contact Administrator");
                 }
                 else if(final >= 0){
@@ -245,7 +245,7 @@ app.post("/renameTutor",(req,res)=>{
     var newname = data.newname;
 
     let sql=`UPDATE users SET username=${newname} WHERE username=${name}`;
-    console.log(sql)
+    //console.log(sql)
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -257,6 +257,294 @@ app.post("/renameTutor",(req,res)=>{
     });
 
 });
+app.post("/signupsession",(req,res)=>{
+    let data = req.body;
+    let name = data.username;
+    let date = data.date;
+
+    let sql = `SELECT * FROM users WHERE username=\"${name}\"`
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        var occurance = false;
+        var dateOccurance = false;
+        sql = `SELECT ID FROM users WHERE username=\"${name}\"`
+        let id;
+        let person = rows[0];
+        db.all(sql, (err,rows)=>{
+            if(err){throw err}
+            id = rows[0]["ID"]
+            sql = "SELECT * FROM sessions"
+            db.all(sql, [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                //console.log(rows);
+                for(let i=0; i<rows.length;i++){
+                    if(rows[i]["date"] == date){
+                        //console.log("date")
+                        dateOccurance = true;
+                        if(rows[i]["attendingStudent"] == id || rows[i]["attendingTutor"] == id){
+                            occurance = true;
+                            
+                            //console.log(occurance)
+                            break
+                        }
+                        
+                    }
+                    
+                    
+                }
+                
+                if(person["level"] >= 3){
+                    
+                    //create session as tutor
+                    if(!occurance){
+                        sql = `INSERT INTO sessions(date,attendingTutor,warning) VALUES("${date}",${person["ID"]},0)`
+                        db.all(sql, [], (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+                            
+                            //console.log(occurance)
+                            res.send("Inserted");
+                        
+                        });
+                    }
+                    else{
+                        res.send("Date Conflict")
+                    }
+                    
+                    
+                }
+                else if(person["level"] < 3){
+                    //create session as student
+                    if(!occurance){
+                        sql = `INSERT INTO sessions(date,attendingStudent,warning) VALUES("${date}",${person["ID"]},0)`
+                        db.all(sql, [], (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+                            
+                            //console.log(occurance)
+                            res.send("Inserted");
+                        
+                        });
+                    }
+                    else{
+                        res.send("Date Conflict")
+                    }
+                }
+                else{
+                    console.log("Invalid User Signup", {name,date,person})
+                    res.send("Invalid User")
+                }
+
+                        
+                        
+                    
+            });
+        });
+        
+        
+        
+        
+    });
+
+
+
+});
+
+app.post("/loadTutors",(req,res)=>{
+
+    var data = req.body;
+    var date = data.date;
+    
+    let sql = `SELECT * FROM sessions WHERE date=\"${date}\"`
+    //console.log(sql);
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        var u = [];
+        for(let i=0;i<rows.length;i++){
+            if(rows[i]["attendingTutor"] != null){
+                u.push(rows[i]["attendingTutor"])
+            }
+        }
+
+        //console.log(u)
+
+        
+        sql = `SELECT username,grade,subjects,ID FROM users`
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            var f = [];
+            //console.log(rows);
+            //console.log(rows[0]["ID"]);
+            for(let i=0;i<rows.length;i++){
+                for(let s=0;s<u.length;s++){
+    
+                    if(rows[i]["ID"] == u[s] && rows[i]["ID"] != null){
+                        f.push({
+                            "name": rows[i]["username"],
+                            "grade": rows[i]["grade"],
+                            "subjects": rows[i]["subjects"],
+                            "id": u[s]
+                        });
+                        
+                        break
+                    }
+                   
+                }
+            }
+
+            //console.log(f);
+            res.send(f)
+            
+        
+        });
+        
+    
+    });
+
+
+
+});
+app.post("/loadStudents",(req,res)=>{
+
+    var data = req.body;
+    var date = data.date;
+    
+    let sql = `SELECT * FROM sessions WHERE date=\"${date}\"`
+    //console.log(sql);
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        var u = [];
+        for(let i=0;i<rows.length;i++){
+            if(rows[i]["attendingStudent"] != null){
+                u.push(rows[i]["attendingStudent"])
+            }
+        }
+
+        //console.log(u)
+
+        
+        sql = `SELECT username,grade,ID FROM users`
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            var f = [];
+            //console.log(rows);
+            //console.log(rows[0]["ID"]);
+            for(let i=0;i<rows.length;i++){
+                for(let s=0;s<u.length;s++){
+    
+                    if(rows[i]["ID"] == u[s] && rows[i]["ID"] != null){
+                        f.push({
+                            "name": rows[i]["username"],
+                            "grade": rows[i]["grade"],
+                            "id": u[s]
+                        });
+                        
+                        break
+                    }
+                   
+                }
+            }
+
+            //console.log(f);
+            res.send(f)
+            
+        
+        });
+        
+    
+    });
+
+
+
+});
+app.get("/loadSessionsDates",(req,res)=>{
+    
+    let sql = `SELECT date FROM sessions`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        var list = [];
+        for(i=0;i<rows.length;i++){
+            list.push(rows[i]["date"]);
+        }
+
+        var dupList = removeDups(list);
+        //console.log(dupList);
+         
+        res.send(dupList)
+    
+    });
+
+
+});
+
+
+app.delete("/deleteUsrFromSession",(req,res)=>{
+    var data = req.body;
+    var name = data.username;
+    var date = data.date;
+    let sql = `SELECT username,ID,level FROM users WHERE username=\"${name}\"`
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        var o = rows;
+        var id = rows[0]["ID"];
+        let lvl = rows[0]["level"];
+        if(Number(lvl) >= 3){
+            sql = `DELETE FROM sessions WHERE attendingTutor=\"${id}\" AND date="${date}"`
+        }
+        else{
+            sql = `DELETE FROM sessions WHERE attendingStudent=\"${id}\" AND date="${date}"`
+        }
+        console.log(sql)
+        console.log(rows);
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            console.log("removed row")
+            res.send("Successfully deleted user from session")
+            
+            
+        
+        });
+
+        
+        
+    
+    });
+
+
+});
+
+
+
+function removeDups(item) {
+  let unique = {};
+  item.forEach(function(i) {
+    if(!unique[i]) {
+      unique[i] = true;
+    }
+  });
+  return Object.keys(unique);
+}
+
 
 
 /**

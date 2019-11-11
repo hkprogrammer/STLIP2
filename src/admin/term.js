@@ -33,7 +33,7 @@ function loadDoc(a,b) {
         
     }
     };
-    xhttp.open("POST", "/login", true);
+    xhttp.open("POST", "/adminLogin", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     //xhttp.send("fname=Henry&lname=Ford");
     console.log(a,b)
