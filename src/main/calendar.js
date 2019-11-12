@@ -44,9 +44,10 @@ function startup(){
         
           var m = Number(d.getMonth()) + 1;
           var y = String(d.getDate());
-          if(y.length = 1){
+          if(y.length == 1){
             y = "0" + y;
           }
+          console.log(y);
           var f = d.getFullYear() + "-" + m + "-" + y;
           console.log(f);
           let s = "";
