@@ -65,15 +65,22 @@ function signup(){
               if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("demo").innerHTML = this.responseText;
                
-                console.log(this.responseText)
-                location.replace("index.html")
-            }
+                    console.log(this.responseText)
+                    if(this.responseText != "conflict"){
+                        location.replace("index.html")
+                    }
+                    else{
+                        console.log(this.responseText)
+                    }
+                    
+                }
             };
             xhttp.open("POST", "/register", true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             //xhttp.send("fname=Henry&lname=Ford");
             let sendcontent = `username=${name}&password=${password}&email=${email}&grade=${grade}`;
             xhttp.send(sendcontent); 
+            
         }
         else{
             //password not match

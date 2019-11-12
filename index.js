@@ -646,7 +646,7 @@ app.post("/register", (req,res)=>{
                                 throw err;
                             }
                             console.log("fully updated")
-                            
+                            res.send("user uploaded")
                             
                         
                         });
@@ -659,6 +659,7 @@ app.post("/register", (req,res)=>{
             else{
                 //conflict
                 console.log("conflict, user already existed")
+                res.send("conflict")
             }
             
             
