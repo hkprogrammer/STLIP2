@@ -43,7 +43,11 @@ function startup(){
           let d = arg.start;
         
           var m = Number(d.getMonth()) + 1;
-          var f = d.getFullYear() + "-" + m + "-" + d.getDate();
+          var y = d.getDate();
+          if(y.length = 1){
+            y = "0" + y;
+          }
+          var f = d.getFullYear() + "-" + m + "-" + y;
           console.log(f);
           let s = "";
           switch(d.getDay()){
@@ -75,15 +79,17 @@ function startup(){
           localStorage.setItem("date",f);
           localStorage.setItem("day",s);
           window.open("detail.html", "_blank");
-          
+          console.log(calendar);
           calendar.unselect()
+          
         },
         editable: true,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true, 
         events: listOfDate
       });
-
+      
       calendar.render();
+      console.log(listOfDate)
       $(`*[data-date=\"${f}\"]`)[0].style.backgroundColor = "rgb(252, 248, 227,0.5)";
     }
   };

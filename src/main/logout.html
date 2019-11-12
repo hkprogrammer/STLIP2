@@ -6,7 +6,14 @@
     <title>Main Page</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="main.css">
-
+    <script>
+    
+        localStorage.removeItem("username");
+        localStorage.removeItem("date");
+        localStorage.removeItem("day");
+        location.replace("../")
+    
+    </script>
 </head>
 <body>
     <div class="row">
@@ -40,16 +47,7 @@
         <div class="col-8">
             <!--Main Display-->
             <div class="box" id="welcome">
-                <div class="container">
-                    
-                    <h3>Welcome to Study Buddies!</h3>
-                    <br>
-                    <!---
-                        <span>You are a peer tutor, please sign-up a session in your calendar menu</span>
-
-                    -->
-                    
-                </div> 
+                
                 
             </div>
         </div>

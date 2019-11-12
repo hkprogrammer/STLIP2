@@ -5,7 +5,8 @@ var path = require('path');
 var db;
 const sqlite3 = require("sqlite3");
 
-
+//hashes
+var md5= require("md5")
 
 startupDB();
 function startupDB(){
@@ -297,9 +298,10 @@ app.post("/signupsession",(req,res)=>{
                     
                 }
                 
-                if(person["level"] >= 3){
+                if(person["level"] == 3){
                     
                     //create session as tutor
+
                     if(!occurance){
                         sql = `INSERT INTO sessions(date,attendingTutor,warning) VALUES("${date}",${person["ID"]},0)`
                         db.all(sql, [], (err, rows) => {
@@ -545,7 +547,139 @@ function removeDups(item) {
   return Object.keys(unique);
 }
 
+app.post("/loginStudent", (req,res)=>{
+    let data = req.body;
+    let username = data.username;
+    let password = data.password;
 
+    if(username != "" &&  password != ""){
+        let sql = `SELECT password,level FROM users WHERE username=\'${username}\'`;
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            let hashPass;
+            if(rows[0]["level"] >= 3){
+                hashPass = password;
+            }
+            else if(rows[0]["level"] <3){
+                hashPass = md5(password);
+            }
+            else{
+                hashPass = password;
+            }
+            try{
+                if(rows[0]["password"] == hashPass){
+                    console.log(username + " accessed through the system");
+                    res.send("access");
+                }
+                else{
+                    console.log("access denied");
+                    res.send("access denied")
+                }
+            }
+            catch(err){
+                console.log(err)
+                console.log("access denied");
+                res.send("access denied")
+            }
+            
+            
+            
+        
+        });
+    }
+
+    console.log({username,password})
+    //res.send({username,password})
+
+});
+app.post("/register", (req,res)=>{
+
+    let data = req.body;
+    let name = data.username;
+    let p = data.password;
+    let email = data.email;
+    let grade = data.grade;
+
+    let password = md5(p);
+    let id = 0;
+
+    let sql = `SELECT username FROM users`
+
+    let c = false;
+    try{
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            for(i=0;i<rows.length;i++){
+                if(rows[i]["username"] == name){
+                    //conflict
+                    c = true;
+                }
+            }
+            if(!c){
+                //getIDs
+                sql = `SELECT count FROM IDs`
+                db.all(sql, [], (err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+                    
+                    id = rows[0]["count"] + 1;
+                    //update users table
+                    sql = `INSERT INTO users(username,password,email,grade,ID,level) VALUES(\"${name}\",\"${password}\",\"${email}\",${grade},${id},1) `
+                    console.log(sql)
+                    db.all(sql, [], (err, rows) => {
+                        if (err) {
+                            throw err;
+                        }
+                        
+                        console.log("updated");
+                        let oid= id-1;
+                        sql = `UPDATE IDs SET count=${id} WHERE count=${oid}`
+                        //update IDs 
+                        db.all(sql, [], (err, rows) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log("fully updated")
+                            
+                            
+                        
+                        });
+                
+                    });
+                    
+                
+                });
+            }
+            else{
+                //conflict
+                console.log("conflict, user already existed")
+            }
+            
+            
+        
+        });
+    }
+    catch(err){
+        console.log(err);
+        res.send("Invalid Register")
+    }
+
+
+    
+    
+
+
+     
+
+
+
+});
 
 /**
  * db.all(sql, [], (err, rows) => {

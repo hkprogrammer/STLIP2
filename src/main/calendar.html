@@ -16,7 +16,7 @@
             <br>
             <div id="namepalce">
                 <center>
-                        <h4>Hitoki Kidahashi</h4>
+                        <h4 id="headerName"></h4>
                         <img src="../images/avatar.jpg" width="50%">
                 </center>
                  
@@ -71,4 +71,9 @@
     <script src='../libs/packages/timegrid/main.js'></script>
     <script src="jquery.js"></script>
     <script src="calendar.js"></script>
+    <script>
+    
+        document.getElementById("headerName").innerHTML = localStorage.getItem("username");
+    
+    </script>
 </body>

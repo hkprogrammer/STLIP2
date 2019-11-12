@@ -145,4 +145,11 @@ input::placeholder{
     font-weight: bold;
     background-color: 	rgb(212, 212, 212,0.4);
     color: white;
+    padding-left: 20%;
+    
+}
+#grade option{
+    color:black;
+
+    padding-left: 30%;
 }

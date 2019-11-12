@@ -228,7 +228,7 @@ function loadInformations(){
         
         }
         for(i=0;i<endDispalyStudentList.length;i++){
-            if(i%2 != 0){
+            if(i%2 == 0){
                 student1.innerHTML += endDispalyStudentList[i];
                 
             }
