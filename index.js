@@ -558,23 +558,29 @@ app.post("/loginStudent", (req,res)=>{
             if (err) {
                 throw err;
             }
-
-            let hashPass;
-            if(rows[0]["level"] >= 3){
-                hashPass = password;
-            }
-            else if(rows[0]["level"] <3){
-                hashPass = md5(password);
-            }
-            else{
-                hashPass = password;
-            }
             try{
-                if(rows[0]["password"] == hashPass){
-                    console.log(username + " accessed through the system");
-                    res.send("access");
+                let hashPass;
+                if(rows[0]["level"] >= 3){
+                    hashPass = password;
+                }
+                else if(rows[0]["level"] <3){
+                    hashPass = md5(password);
                 }
                 else{
+                    hashPass = password;
+                }
+                try{
+                    if(rows[0]["password"] == hashPass){
+                        console.log(username + " accessed through the system");
+                        res.send("access");
+                    }
+                    else{
+                        console.log("access denied");
+                        res.send("access denied")
+                    }
+                }
+                catch(err){
+                    console.log(err)
                     console.log("access denied");
                     res.send("access denied")
                 }
@@ -584,6 +590,7 @@ app.post("/loginStudent", (req,res)=>{
                 console.log("access denied");
                 res.send("access denied")
             }
+           
             
             
             
