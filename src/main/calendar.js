@@ -43,7 +43,7 @@ function startup(){
           let d = arg.start;
         
           var m = Number(d.getMonth()) + 1;
-          var y = d.getDate();
+          var y = String(d.getDate());
           if(y.length = 1){
             y = "0" + y;
           }
