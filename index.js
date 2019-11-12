@@ -21,8 +21,8 @@ function startupDB(){
 
 
 app.use(express.urlencoded())
-const port = 3000;
-
+//const port = 3000;
+const port = 80;
 var server = app.listen(port, listening);
 
 app.use(express.static('src'))
