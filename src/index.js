@@ -66,7 +66,7 @@ function signup(){
                 //document.getElementById("demo").innerHTML = this.responseText;
                
                 console.log(this.responseText)
-                
+                location.replace("index.html")
             }
             };
             xhttp.open("POST", "/register", true);
