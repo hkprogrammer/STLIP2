@@ -37,13 +37,14 @@
 
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-8" id="main">
             <!--Main Display-->
             <div class="box" id="welcome">
                 <div class="container">
                     
                     <h3>Welcome to Study Buddies!</h3>
                     <br>
+                    <h5>Follow the tutorial  <a href="tutorial.html">here</a></h5>
                     <!---
                         <span>You are a peer tutor, please sign-up a session in your calendar menu</span>
 
@@ -52,14 +53,72 @@
                 </div> 
                 
             </div>
+            <center id="addItemBox">
+                <div class="addbox" onclick="newPost()">
+                   
+                   <img src="../Images/addItem.png" width="9%" style="margin-top: 10px" class="addItem">
+                </div>
+            </center>
+
+            
         </div>
+        
         <div class="col-2">
             <!--Right Bar-->
+            
+         
+            <div class="box" style="margin-top: 19%; padding:10px;">
+                <div class="container">
+                    <h5><strong>Upcoming Sessions</strong></h5>
+                    <hr>
+                    <table id="Upcoming">
+                        <tr>
+                            <th class="date" width="70%">2019/11/30</th>
+                            <td class="day">Wed</td>
+                            <td><a class="btn btn-sm btn-primary" style="font-size: 9px;">Go</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <th class="date" width="70%">2019/11/31</th>
+                            <td class="day">Thurs</td>
+                            <td><a class="btn btn-sm btn-primary" style="font-size: 9px;">Go</a></td>
+                        </tr>
+                      
+                    </table>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="box" style="padding:10px;">
+                <div class="container">
+                    <h5><strong>Upcoming Event</strong>s</h5>
+                    <hr>
+                    <ul>
+                        <li>StudyBuddies rep meeting (2019/12/4)</li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            
+            <div class="box" style="padding:10px; height: 300px;">
+                    <div class="container">
+                        <h5><strong>Individual Meetings</strong>s</h5>
+                        <hr>
+                       
+                    </div>
+                </div>
         </div>
+        
         <script>
     
             document.getElementById("headerName").innerHTML = localStorage.getItem("username");
         
         </script>
+        <script src="index.js">
+        </script>
     </div>
+    <br>
+    <br>
 </body>
