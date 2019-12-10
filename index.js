@@ -689,6 +689,23 @@ app.post("/register", (req,res)=>{
 
 });
 
+//Articles
+
+app.post("/publishArticle",(req,res)=>{
+    var data = req.body;
+    var publisher = data["publisher"];
+    var date = data["date"];
+    var title = data["title"];
+    var content = data["content"];
+
+    console.log({data});
+    
+    res.send("safe")
+
+});
+
+
+ 
 /**
  * db.all(sql, [], (err, rows) => {
     if (err) {
