@@ -36,6 +36,96 @@ const p = `<div class="box" id="newpost">
 
 </div> `;
 
+const articleBox = `<div class="box" id="welcome">
+<div class="container">
+    
+    <h3>Welcome to Study Buddies!</h3>
+    <br>
+    <h5>Follow the tutorial  <a href="tutorial.html">here</a></h5>
+    <!---
+        <span>You are a peer tutor, please sign-up a session in your calendar menu</span>
+
+    -->
+    
+</div> 
+
+</div>`
+
+
+const addBox = ` <div class="addbox" onclick="newPost()">
+                   
+<img src="../images/addItem.png" width="9%" style="margin-top: 10px" class="addItem">
+</div>`
+
+async function displayArticle(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            var data = JSON.parse(this.responseText);
+            var format = "";
+
+            for(let i=0;i<data.length;i++){
+                format += ` <div class="box" >
+                <div class="container">
+                    
+                   <div class="row">
+                       <div class="col-10">
+                            <h1>${data[i]["Title"]}</h1>
+                       </div>
+                       <div class="col-2"> 
+                            <span><i>Published by: ${data[i]["Publisher"]}</i></span>
+                       </div>
+
+                   </div>
+                   <sub>${data[i]["Date"]}</sub>
+                   <hr>
+                   <div class="container">
+                        <!--Content-->
+                        ${data[i]["Content"]}
+                   </div>
+                   <br>
+                    
+                </div> 
+                
+            </div>`;
+            }
+
+            document.getElementById("articles").innerHTML = format;
+
+        }
+    };
+    xhttp.open("POST", "/showArticle", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `user=${localStorage.getItem("username")}`;
+    xhttp.send(att);
+
+}
+
+
+async function checkLevel(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            console.warn(this.responseText);   
+            if(this.responseText == "true"){
+                document.getElementById("addItemBox").innerHTML = addBox;
+            }
+            else{
+                console.log(this.responseText)
+            }
+            displayArticle();
+        }
+    };
+    xhttp.open("POST", "/checkLevel", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `user=${localStorage.getItem("username")}`;
+    xhttp.send(att);
+
+   
+}
+
 function publish(){
     try{
         var username = localStorage.getItem("username");
@@ -53,6 +143,7 @@ function publish(){
             if (this.readyState == 4 && this.status == 200) {
             //document.getElementById("demo").innerHTML = this.responseText;
                 console.warn(this.responseText);   
+                location.reload();
             }
         };
         xhttp.open("POST", "/publishArticle", true);

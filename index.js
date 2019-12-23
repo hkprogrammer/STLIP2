@@ -698,23 +698,59 @@ app.post("/publishArticle",(req,res)=>{
     var title = data["title"];
     var content = data["content"];
 
+    
+    let sql = `INSERT INTO articles(Publisher,Date,Content,Title) VALUES('${publisher}','${date}','${title}','${content}')`;
+    db.all(sql, [], (err, rows) => {
+        console.log("correctly saved")
+    });
+    
+    
+    
+
+ 
+
     console.log({data});
     
     res.send("safe")
 
 });
+app.post("/showArticle", (req,res)=>{
 
+    let sql = `SELECT * FROM articles`;
+    db.all(sql,[],(err,rows)=>{
+
+        res.send(rows);
+
+
+    });
+
+
+})
+app.post("/checkLevel", (req,res)=>{
+
+    var datas = req.body;
+    var username = datas["user"];
+
+    let sql = `SELECT username,level FROM users WHERE username='${username}'`;
+    db.all(sql, [], (err, rows) => {
+        console.log(rows)
+        if(rows[0]["level"] >= 3){
+            
+            res.send("true");
+        }
+        else{
+            res.send("false");
+
+        }
+
+    });
+
+});
 
  
 /**
  * db.all(sql, [], (err, rows) => {
-    if (err) {
         throw err;
-    }
-    
-    
-    
-
-});
+    });
  * 
  */
