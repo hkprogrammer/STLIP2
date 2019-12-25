@@ -86,7 +86,7 @@ app.post("/adminLogin",(req,res)=>{
     let name = String(data.username);
     let password = String(data.password);
 
-    console.log(name,password)
+    //console.log(name,password)
     var access = false;
     let sql = `SELECT * FROM users`;
     var msg = "";
@@ -598,7 +598,7 @@ app.post("/loginStudent", (req,res)=>{
         });
     }
 
-    console.log({username,password})
+    //console.log({username,password})
     //res.send({username,password})
 
 });
@@ -747,7 +747,21 @@ app.post("/checkLevel", (req,res)=>{
 
 });
 
+app.delete("/delArticle", (req,res)=>{
+
+    var data = req.body;
+    var title = data["title"];
+
+    let sql = `DELETE FROM articles WHERE Title='${title}'`;
+    db.all(sql, [], (err, rows) => {
+        res.send("deleted");
+    });
+
+});
+
+
  
+
 /**
  * db.all(sql, [], (err, rows) => {
         throw err;
