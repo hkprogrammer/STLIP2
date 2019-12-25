@@ -43,12 +43,17 @@ function startup(){
           let d = arg.start;
         
           var m = Number(d.getMonth()) + 1;
+          var mM = String(m);
+          if(mM.length == 1){
+            mM = "0" + mM;
+          }
+          //console.warn(mM)
           var y = String(d.getDate());
           if(y.length == 1){
             y = "0" + y;
           }
           console.log(y);
-          var f = d.getFullYear() + "-" + m + "-" + y;
+          var f = d.getFullYear() + "-" + mM + "-" + y;
           console.log(f);
           let s = "";
           switch(d.getDay()){
@@ -111,8 +116,17 @@ function startup(){
 
 var s = new Date();
 var m = Number(s.getMonth()) + 1;
-var f = s.getFullYear() + "-" + m + "-" + s.getDate();
-// console.log({s,f});
+var mM = String(m);
+if(mM.length == 1){
+  mM = "0" + mM;
+}
+var y = String(s.getDate());
+if(y.length == 1){
+  y = "0" + y;
+}
+var f = s.getFullYear() + "-" + mM + "-" + y;
+console.log({s,f});
+
 // console.log(typeof(f));    
 // localStorage.setItem("date", f);
 

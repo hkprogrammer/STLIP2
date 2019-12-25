@@ -759,6 +759,29 @@ app.delete("/delArticle", (req,res)=>{
 
 });
 
+app.post("/getSessionForPanels",(req,res)=>{
+
+    var data = req.body;
+    var username = data["username"];
+
+    let sql = `SELECT username,ID,level FROM users WHERE username='${username}'`
+    db.all(sql, [], (err, rows) => {
+        //console.log(rows);
+        if(rows[0]["level"] >= 3){
+            sql = `SELECT date FROM sessions WHERE attendingTutor='${rows[0]["ID"]}'`
+        }
+        else{
+            sql = `SELECT date FROM sessions WHERE attendingStudent='${rows[0]["ID"]}'`
+        }
+        
+        //console.warn(sql)
+        db.all(sql, [], (err, rows) => {
+           //console.log(rows)
+           res.send(rows);
+        });
+       
+    });
+});
 
  
 
