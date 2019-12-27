@@ -11,7 +11,11 @@ body{
     
     color:white;
     width:100%;
+
+    font-size:1vw;
 }
+
+
 
 .row{
     width:100%;
@@ -22,13 +26,10 @@ body h1, body h3,body h4{
 .box{
     background-color:#1D262D;
     box-shadow: 2px 2px 8px black;
-    margin-top: 4.5%;
-    margin-left:5%;
-    margin-right:5%;
+    margin:3%;
 }
 #welcome{
     
-    width:90%;
     height: 200px;
 }
 .navbar ul li a{
@@ -36,6 +37,11 @@ body h1, body h3,body h4{
     text-decoration: none;
     font-size: 27px;
     
+}
+.horizontalBarLinks{
+    color:white;
+    text-decoration: none;
+    font-size: 27px;
 }
 hr{
     border-top: 1px solid lightgrey;
@@ -129,4 +135,12 @@ hr{
 
 a:hover{
     cursor: pointer;
+}
+#Upcoming th{
+
+    font-size:80%;
+}
+
+.Articlecontents{
+    font-size: 20px;
 }

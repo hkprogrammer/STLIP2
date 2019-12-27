@@ -262,7 +262,8 @@ async function displayArticle(){
                    <hr>
                    <div class="container">
                         <!--Content-->
-                        ${data[i]["Content"]}
+                        <span class="Articlecontents">${data[i]["Content"]}</span>
+                        
                    </div>
                    <br>
                     

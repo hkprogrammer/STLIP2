@@ -3,6 +3,7 @@
     <meta author="Hitoki Kidahashi">
     <meta contact="hitokikidahashi@student.midpac.edu">
     <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
+   
     <title>Main Page</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -10,7 +11,7 @@
 </head>
 <body onload="checkLevel()">
     <div class="row">
-        <div class="col-2">
+        <div class="col-lg-2 col-md-2 col-sm-12">
             <!--Left Navs-->
             <br>
             <br>
@@ -25,7 +26,7 @@
             <br>
             <br>
             <div class="nav navbar">
-                <ul type="none">
+                <ul type="none" id="RightBar">
                         <li><a href="index.html">Main</a></li>
                         <hr>
                         <li><a href="calendar.html">Calendar</a></li>
@@ -34,10 +35,11 @@
                         <hr>
                         <li><a href="logout.html">Logout</a></li>
                 </ul>
+                
 
             </div>
         </div>
-        <div class="col-8" id="main">
+        <div class="col-lg-8 col-md-12 col-sm-12" id="main">
             <!--Main Display-->
             <div class="box" id="welcome">
                 <div class="container">
@@ -64,54 +66,58 @@
             
         </div>
         
-        <div class="col-2">
+        <div class="col-lg-2 col-lg-2 col-sm-12">
             <!--Right Bar-->
-            
          
-            <div class="box" style="margin-top: 19%; padding:10px;">
-                <div class="container">
-                    <h5><strong>Upcoming Sessions</strong></h5>
-                    <hr>
-                    <table id="Upcoming">
-                       
-                        
-                       
-                      
-                    </table>
-                </div>
-            </div>
-            <br>
-            <br>
-            <div class="box" style="padding:10px;">
-                <div class="container">
-                    <h5><strong>Upcoming Event</strong>s</h5>
-                    <hr>
-                    <ul>
-                        <li>StudyBuddies rep meeting (2019/12/4)</li>
-                    </ul>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
             
-            <div class="box" style="padding:10px; height: 300px;">
-                    <div class="container">
-                        <h5><strong>Individual Meetings</strong>s</h5>
-                        <hr>
-                       
+            <div class="row" id="sideBar" style="margin-top: 30px; margin-left:0.5%;">
+                
+                 <div class="col-lg-12 col-md-4 col-sm-4 col">
+                    <div class="box" style=" padding:10px;">
+                        <div class="container">
+                            <h5><strong>Upcoming Sessions</strong></h5>
+                            <hr>
+                            <table id="Upcoming">
+                               
+                                
+                               
+                              
+                            </table>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-12 col-md-4 col-sm-4 col">
+                    <div class="box" style="padding:10px;">
+                        <div class="container">
+                            <h5><strong>Upcoming Event</strong>s</h5>
+                            <hr>
+                            <ul>
+                                <li>StudyBuddies rep meeting (2019/12/4)</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-12 col-md-4 col-sm-4 col">
+                    <div class="box" style="padding:10px; height: 300px;">
+                        <div class="container">
+                            <h5><strong>Individual Meetings</strong>s</h5>
+                            <hr>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <script>
-    
-            document.getElementById("headerName").innerHTML = localStorage.getItem("username");
         
-        </script>
-        <script src="index.js">
-        </script>
     </div>
+    <script>
+    
+        document.getElementById("headerName").innerHTML = localStorage.getItem("username");
+    
+    </script>
+    <script src="index.js">
+    </script>
     <br>
     <br>
 </body>

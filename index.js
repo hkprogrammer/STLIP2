@@ -699,7 +699,7 @@ app.post("/publishArticle",(req,res)=>{
     var content = data["content"];
 
     
-    let sql = `INSERT INTO articles(Publisher,Date,Content,Title) VALUES('${publisher}','${date}','${title}','${content}')`;
+    let sql = `INSERT INTO articles(Publisher,Date,Content,Title) VALUES('${publisher}','${date}','${content}','${title}')`;
     db.all(sql, [], (err, rows) => {
         console.log("correctly saved")
     });
