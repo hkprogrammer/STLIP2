@@ -166,6 +166,92 @@ async function loadSessions(){
     xhttp.send(att);
 }
 
+async function editArticle(n){
+
+    let title = document.getElementsByClassName("Title")[n].innerHTML;
+    let content = document.getElementsByClassName("Content")[n].innerHTML;
+    let date = document.getElementsByClassName("ArticleDate")[n].innerHTML;
+    let publisher = document.getElementsByClassName("ArticlePublisher")[n].innerHTML;
+
+    let box = document.getElementsByClassName("ArticleBoxCount")[n];
+    box.remove();
+    
+    let f = `<div class="box" id="newpost">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-9">
+                <h3>Create New Post</h3>
+            </div>
+            <div class="col-3">
+                <i style="font-size:15px">Posted by: <span id="Editpostby"></span></i>
+                
+            </div>
+        </div>
+       
+        <br>
+        <input type="text" style="width: 50%;" placeholder="title" id="Edittitle">
+        <br>
+        <br>
+        <textarea style="width:80%; min-height: 400px;" placeholder="content" id="Editcontent"></textarea>
+        
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-9">
+                <!--Cancel-->
+                <a href="" class="btn btn-sm btn-danger">Cancel</a>
+            </div>
+            <div class="col-3">
+                <!--Submit-->
+                <a class="btn btn-sm btn-info" onclick="Editpublish()">Publish</a>
+            </div>
+        </div>
+    </div> 
+    
+    </div>`
+    var target = document.getElementById("articles")
+    target.innerHTML += f;
+    localStorage.setItem("originTitle",title);
+    document.getElementById("Edittitle").value = title
+    document.getElementById("Editpostby").innerHTML = publisher
+    document.getElementById("Editcontent").value = content;
+
+}
+
+function Editpublish(){
+
+
+    let originTitle = localStorage.getItem("originTitle");
+    let title = document.getElementById("Edittitle").value;
+    let publisher = document.getElementById("Editpostby").innerHTML
+    let content = document.getElementById("Editcontent").value
+    var s = new Date();
+    var m = Number(s.getMonth()) + 1;
+    var todayDate = s.getFullYear() + "-" + m + "-" + s.getDate();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            console.warn(this.responseText);   
+            if(this.responseText == "safe"){
+                location.reload();
+            }
+        }
+    };
+    xhttp.open("POST", "/editArticle", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `originalTitle=${originTitle}&title=${title}&content=${content}&publisher=${publisher}&date=${todayDate}`;
+    xhttp.send(att);
+
+
+
+
+}
+
+
+
+
 function GoDetails(n){
     var selection = document.getElementsByClassName("date")[n].innerHTML;
     var d = new Date(String(selection));
@@ -216,7 +302,46 @@ async function displayArticle(){
                 let s = localStorage.getItem("level");
                 
                 if(s == "HIGH"){
-                    format +=`<div class="box" >
+                    format +=`
+                    <div class="box ArticleBoxCount">
+                    <div class="container">
+                        
+                       <div class="row">
+                           <div class="col-10">
+                                <h1 class="Title">${data[i]["Title"]}</h1>
+                           </div>
+                           <div class="col-2"> 
+                                <span>Published by:<i class="ArticlePublisher"> ${data[i]["Publisher"]}</i></span>
+                           </div>
+    
+                       </div>
+                       <sub class="ArticleDate">${data[i]["Date"]}</sub>
+                       <hr>
+                       <div class="container Content">${data[i]["Content"]}</div>
+                       <div class="row">
+                                <div class="col-10">
+                                </div>
+                                <div class="col-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="btn btn-sm btn-info" onclick="editArticle(${a})">
+                                                <img src="../images/rename.png" width="15px;">
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="btn btn-sm btn-danger" onclick="del(${a})"><img src="../images/delete.png" width="15px;"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                       <br>
+                        
+                    </div> 
+                    
+                </div>`
+                }
+                else{
+                    format += ` <div class="box" >
                     <div class="container">
                         
                        <div class="row">
@@ -234,42 +359,11 @@ async function displayArticle(){
                             <!--Content-->
                             ${data[i]["Content"]}
                        </div>
-                       <div class="row">
-                                <div class="col-10">
-                                </div>
-                                <div class="col-2"><a class="btn btn-sm btn-danger" onclick="del(${a})">Delete</a></div>
-                        </div>
                        <br>
                         
                     </div> 
                     
-                </div>`
-                }
-                else{
-                    format += ` <div class="box" >
-                <div class="container">
-                    
-                   <div class="row">
-                       <div class="col-10">
-                            <h1>${data[i]["Title"]}</h1>
-                       </div>
-                       <div class="col-2"> 
-                            <span><i>Published by: ${data[i]["Publisher"]}</i></span>
-                       </div>
-
-                   </div>
-                   <sub>${data[i]["Date"]}</sub>
-                   <hr>
-                   <div class="container">
-                        <!--Content-->
-                        <span class="Articlecontents">${data[i]["Content"]}</span>
-                        
-                   </div>
-                   <br>
-                    
-                </div> 
-                
-            </div>`;
+                </div>`;
                 }
                 a++;
             }

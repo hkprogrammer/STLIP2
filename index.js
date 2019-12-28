@@ -716,7 +716,7 @@ app.post("/publishArticle",(req,res)=>{
 });
 app.post("/showArticle", (req,res)=>{
 
-    let sql = `SELECT * FROM articles`;
+    let sql = `SELECT * FROM articles ORDER BY Date DESC`;
     db.all(sql,[],(err,rows)=>{
 
         res.send(rows);
@@ -783,6 +783,27 @@ app.post("/getSessionForPanels",(req,res)=>{
     });
 });
 
+
+app.post("/editArticle", (req,res)=>{
+
+    var data = req.body;
+    var originalTitle = data["originalTitle"];
+    var title = data["title"];
+    var content = data["content"];
+    var date = data["date"];
+    var publisher = data["publisher"];
+
+
+    let sql = `UPDATE articles SET Publisher="${publisher}",Date="${date}",Title="${title}",content="${content}" WHERE Title="${originalTitle}"`;
+    db.all(sql, [], (err, rows) => {
+        console.log("sucess")
+        res.send("safe");
+    });
+
+
+
+
+});
  
 
 /**
