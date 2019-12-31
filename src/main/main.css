@@ -67,6 +67,14 @@ hr{
     color:black;    
     
 }
+.SearchInverseBox{
+    background-color: #b3b3b3;
+    font-weight: bold;
+    box-shadow: 0.5px 0.5px 7px black;
+    border-radius: 2px;
+    color:black;    
+    
+}
 .infoCard{
     width: 90%;
     padding: 5px;
@@ -143,4 +151,15 @@ a:hover{
 
 .Articlecontents{
     font-size: 20px;
+}
+#myTab{
+    font-size: 15px;
+}
+
+.selectorButton{
+    margin: 5px;
+}
+
+#largeContainer{
+    padding:30px;
 }

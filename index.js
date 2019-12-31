@@ -805,6 +805,41 @@ app.post("/editArticle", (req,res)=>{
 
 });
  
+app.post("/searchTutor", (req,res)=>{
+
+    var data = req.body;
+    var condition = data["condition"];
+    var username = data["username"];
+    console.log(data)
+    let sql = `SELECT * FROM users WHERE Level=3`;
+    db.all(sql, [], (err, rows) => {
+
+        let format = [];
+        for(let i=0;i<rows.length;i++){
+            var person = rows[i];
+            var subject = person["subjects"].split(",");
+            console.log(subject)
+            for(let v=0;v<subject.length;v++){
+                if(subject[v] == condition){
+                    format.push(person);
+                    
+                }
+            }
+
+        }
+        console.log(format)
+        res.send(format);
+
+    });
+
+
+
+
+});
+
+
+
+
 
 /**
  * db.all(sql, [], (err, rows) => {
