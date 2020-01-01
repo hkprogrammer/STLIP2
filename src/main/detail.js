@@ -52,6 +52,14 @@ function loadInformations(){
             var s = data["subjects"];
             var id = data["id"];
 
+            if(Number(id) < 10){
+                id = "0" + id;
+            }
+
+            var n = name.split("");
+            name = n[0] + "." + id;
+
+
             var grade = "";
             console.log(Number(g))
             switch(Number(g)){
