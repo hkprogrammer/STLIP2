@@ -4,7 +4,7 @@ function search(condition){
 
     document.getElementById("tutorCards").innerHTML = "<img src=\"../images/loading.gif\" width=\"60%\">"
 
-
+    localStorage.setItem("course", selector);
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -76,7 +76,7 @@ function search(condition){
                     <div class="col-9">
                         
                         <h3>${displayName}</h3>
-                        <div class="btn btn-sm btn-success" style="cursor:pointer;" onclick="request(\"${name}\")">Request Tutor</div>
+                        <div class="btn btn-sm btn-success" style="cursor:pointer;" onclick="request(\'${name}\')">Request Tutor</div>
                         
                         <hr>
                         
@@ -101,7 +101,7 @@ function search(condition){
 
 
 async function request(n){
-
+    console.log(n)
     var d = new Date();
     var m = Number(d.getMonth()) + 1;
     var mM = String(m);
@@ -144,7 +144,8 @@ async function request(n){
         break
     }
 
-
+    
+    console.log(f)
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -152,14 +153,14 @@ async function request(n){
         //document.getElementById("demo").innerHTML = this.responseText;
        
         console.log(this.responseText)
-        location.reload();
+        //location.reload();
        
     }
     };
     xhttp.open("POST", "/requestTutor", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     //xhttp.send("fname=Henry&lname=Ford");
-    let sendcontent = `from=${localStorage.getItem("username")}&to=${String(n)}&`;
+    let sendcontent = `from=${localStorage.getItem("username")}&to=${String(n)}&date=${f}&course=${localStorage.getItem("course")}`;
     xhttp.send(sendcontent);
 
 }

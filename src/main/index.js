@@ -92,6 +92,12 @@ const addBox = ` <div class="addbox" onclick="newPost()">
 <img src="../images/addItem.png" width="9%" style="margin-top: 10px" class="addItem">
 </div>`
 
+const requestTFormat = ` <tr>
+                                   
+<td width="80%">From H.02</td>
+<td><div class="btn btn-sm btn-primary" style="cursor:pointer;">Go</div></td>
+</tr>`
+
 async function del(n){
 
     var title = document.getElementsByClassName("Title")[n].innerHTML;
@@ -290,6 +296,87 @@ function GoDetails(n){
     
 }
 
+async function checkTutorRequest(){
+    console.log("CheckTutor")
+    var name = localStorage.getItem("username");
+   
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            //student & teacher handler
+            let data = JSON.parse(this.responseText);
+            let format = "";
+            console.log(data);
+            document.getElementById("requestTutor").innerHTML = "";
+            if(data.length!=0){
+                for(let i = 0; i<data.length;i++){
+                    var event = data[i];
+                    let target;
+                    let displayname;
+                   
+                    if(event["requestFrom"] == name){
+                        target = "To"
+                        let id;
+                        if(Number(event["requestToID"]) < 10){id = "0" + event["requestToID"]}
+                        else{id = event["requestToID"]}
+                        displayname = (event["requestTo"].split(""))[0] + "." + id;
+                        format +=` 
+                        <tr>
+                                    
+                        <td width="80%">${target} ${displayname}</td>
+                        <td><div class="btn btn-sm btn-primary" style="cursor:pointer;" onclick="requestDetails(\'${event["requestID"]}\')">Go</div></td>
+                        </tr>`;
+                        
+                    }
+                    else if(event["requestTo" == name]){
+                        target = "From";
+
+                        let a = event["requestFrom"].split(" ");
+                        displayname = a[0];
+                        format += ` 
+                        <tr>
+                                    
+                        <td width="80%">${target} ${displayname}</td>
+                        <td><div class="btn btn-sm btn-primary" style="cursor:pointer;" onclick="requestDetails(\'${event["requestID"]}\')">Go</div></td>
+                        </tr>`;
+                        
+                    }
+                }
+                document.getElementById("requestTutor").innerHTML  = format;
+                   
+                   
+            }
+            else{
+                format = "No request so far"
+                
+            }
+            document.getElementById("requestTutor").innerHTML  = format;
+            
+
+
+            //admin handler(need update)
+        
+    
+    
+    
+        }
+    
+    
+    };
+    xhttp.open("POST", "/checkRequestStatus", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `user=${name}`;
+    xhttp.send(att);
+        
+
+    
+
+}
+
+
+
 async function displayArticle(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -396,6 +483,7 @@ async function checkLevel(){
             }
             displayArticle();
             loadSessions();
+            checkTutorRequest();
         }
     };
     xhttp.open("POST", "/checkLevel", true);
@@ -405,6 +493,18 @@ async function checkLevel(){
 
    
 }
+
+function requestDetails(n){
+
+    localStorage.setItem("requestTutorCourseID", n);
+    window.open("tutorDetails.html","_self");
+
+
+
+
+
+}
+
 
 function publish(){
     try{

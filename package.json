@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hitoki Kidahashi. Jackson Lau",
+  "author": "Hitoki Kidahashi",
   "license": "ISC",
   "dependencies": {
     "crypto": "^1.0.1",

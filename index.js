@@ -837,15 +837,132 @@ app.post("/searchTutor", (req,res)=>{
 
 });
 
+
+
 app.post("/requestTutor", (req,res)=>{
 
     var data = req.body;
     var fromUser = data["from"];
     var targetTutor = data["to"];
+    var date = data["date"];
+    var subject = data["course"]
+    let sql = "SELECT requestID FROM requestTutors ORDER BY requestID ASC";
+    db.all(sql, [], (err, rows) => {
+        //check if the first row exist
+        
+        let count
+        try{
+            console.log(rows[0]["requestID"]);
+            count = rows.length + 1;
+        }
+        catch(err){
+            console.log(err);
+            count = 1;
+            
+            
+        }
+        sql = `SELECT ID FROM users WHERE username="${targetTutor}"`;
+        db.all(sql, [], (err, rows) => {
+            let id = rows[0]["ID"];
 
+            sql = `INSERT INTO requestTutors(requestID,requestFrom,requestTo,requestDate,requestToID,subject) VALUES(${count},"${fromUser}","${targetTutor}","${date}",${id},"${subject }")`
+            db.all(sql, [], (err, rows) => {
+            
+              
+                res.send("safe");
     
+    
+            });
+            
+
+        });
 
 
+       
+        
+    });
+
+
+   
+
+
+
+
+    //res.send("safe")
+
+
+
+});
+
+
+app.post("/checkRequestStatus",(req,res)=>{
+
+    var data = req.body;
+    var username = data["user"];
+
+
+    let sql =  `SELECT username,level FROM users WHERE username='${username}'`;
+    db.all(sql, [], (err, rows) => {
+        let level = rows[0]["level"];
+
+        //tutor handler
+        if(Number(level) >= 3 && Number(level) != 5){
+            sql = `SELECT * FROM requestTutors WHERE requestTo='${username}'`
+            
+        }
+        //student handler
+        else if(Number(level) < 3){
+            sql = `SELECT * FROM requestTutors WHERE requestFrom='${username}'`
+        }
+        //admin handler
+        else{
+            res.send("Admin Access");
+        }
+
+
+        db.all(sql, [], (err, rows) => {
+            console.log(rows,"rows");
+            res.send(rows);
+
+
+        });
+
+
+
+    });
+
+
+});
+
+app.post("/loadRequestDetails",(req,res)=>{
+
+    var data = req.body;
+    var id = data["requestID"];
+
+    let sql = `SELECT * FROM requestTutors WHERE requestID=${id}`
+    db.all(sql, [], (err, rows) => {
+        var d = {
+            "requestData" : rows[0]
+        };
+        let studentName = rows[0]["requestFrom"];
+        let tutorName = rows[0]["requestTo"];
+        //fetch Students information
+        sql = `SELECT username,email,grade FROM users WHERE username="${studentName}"`;
+        db.all(sql, [], (err, rows) => {
+            d["studentInfo"] = rows[0];
+
+
+            //fetch Tutor information
+            sql = `SELECT username,email,grade,subjects,ID FROM users WHERE username="${tutorName}"`;
+            db.all(sql, [], (err, rows) => {
+               d["tutorInfo"] = rows[0];
+               console.log(d);
+               res.send(d)
+            });
+        });
+
+
+    });
 
 });
 
