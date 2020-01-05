@@ -907,12 +907,12 @@ app.post("/checkRequestStatus",(req,res)=>{
 
         //tutor handler
         if(Number(level) >= 3 && Number(level) != 5){
-            sql = `SELECT * FROM requestTutors WHERE requestTo='${username}'`
+            sql = `SELECT * FROM requestTutors WHERE requestTo='${username}' AND valid!=0`
             
         }
         //student handler
         else if(Number(level) < 3){
-            sql = `SELECT * FROM requestTutors WHERE requestFrom='${username}'`
+            sql = `SELECT * FROM requestTutors WHERE requestFrom='${username}' AND valid!=0`
         }
         //admin handler
         else{
@@ -921,7 +921,9 @@ app.post("/checkRequestStatus",(req,res)=>{
 
 
         db.all(sql, [], (err, rows) => {
-            console.log(rows,"rows");
+            
+
+            console.log(rows)
             res.send(rows);
 
 
@@ -966,7 +968,20 @@ app.post("/loadRequestDetails",(req,res)=>{
 
 });
 
+app.post("/cancelRequest", (req,res)=>{
 
+    var data = req.body;
+    var username = data["name"];
+    var requestID = data["requestID"];
+
+    let sql = `UPDATE requestTutors SET valid=0 WHERE requestID=${requestID}`;
+    db.all(sql, [], (err, rows) => {
+        console.log("canceled");
+        res.send("safe");
+
+    });
+
+});
 
 
 /**

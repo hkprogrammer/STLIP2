@@ -97,10 +97,46 @@ function loadTutorRequestDetail(){
                     </div>
 
                 </div>`;
+            let v;
+            if(r["valid"] == 0){
+                v = "Canceled"
+            }
+            else if(r["valid"] == 1){
+                v= "Pending"
+            }
+            else{
+                v=""
+            }
+
+            let listFormat = ` 
+            <tr>
+                <th>Requested Date:</th>
+                <td>${r["requestDate"]}</td>
+            </tr>
+            <tr>
+                <th>Requested Subject:</th>
+                <td class="btn btn-sm btn-secondary">${r["subject"]}</td>
+            </tr>
+            <tr>
+                <th>Validation: </th>
+                <td>${v}</td>
+            </tr>
+            <tr style="visibility:hidden;">
+                <th>Request ID: </th>
+                <td id="ID">${r["requestID"]}</td>
+            </tr>
+            `
+
+
 
 
             document.getElementById("requestFrom").innerHTML = studentFormat;
             document.getElementById("requestTo").innerHTML = tutorFormat;
+            document.getElementById("displayDetailedList").innerHTML = listFormat;
+            if(localStorage.getItem("username") == r["requestFrom"]){
+                document.getElementById("accept").classList.add("disabled")
+            }
+       
         }
     };
     xhttp.open("POST", "/loadRequestDetails", true);
@@ -108,5 +144,31 @@ function loadTutorRequestDetail(){
     att = `requestID=${id}`;
     xhttp.send(att);
 
+
+}
+
+
+function cancel(){
+
+    let id = document.getElementById("ID").innerHTML;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+           
+         
+        }
+    };
+    xhttp.open("POST", "/cancelRequest", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `name=${localStorage.getItem("username")}&requestID=${id}`;
+    xhttp.send(att);
+    
+
+
+    
+}
+
+function accept(){
 
 }

@@ -330,7 +330,7 @@ async function checkTutorRequest(){
                         </tr>`;
                         
                     }
-                    else if(event["requestTo" == name]){
+                    else if(event["requestTo"] == localStorage.getItem("username")){
                         target = "From";
 
                         let a = event["requestFrom"].split(" ");
