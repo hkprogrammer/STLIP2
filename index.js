@@ -135,7 +135,12 @@ app.post("/addTutor", (req,res)=>{
     var grade = data.grade;
     var email = data.email;
     var subject = data.subject;
-    
+    var password = data["password"];
+    let passlen = String(password).length;
+
+    password = md5(password)
+
+
     let sql = `SELECT count FROM IDs`
     var c;
     var f;
@@ -157,7 +162,7 @@ app.post("/addTutor", (req,res)=>{
             // get the last insert id
            
         });
-        sql = `INSERT INTO users(username,email,grade,subjects,ID,password,level) VALUES(\"${name}\",\"${email}\",${grade},\"${subject}\",\"${f}\","StudyBuddies2019",3)`
+        sql = `INSERT INTO users(username,email,grade,subjects,ID,password,level) VALUES(\"${name}\",\"${email}\",${grade},\"${subject}\",\"${f}\","${password}",3)`
         //console.log(sql);
         db.run(sql, function(err) {
             if (err) {
@@ -168,7 +173,10 @@ app.post("/addTutor", (req,res)=>{
             //console.log(`A row has been inserted with rowid ${this.lastID}`);
             //console.log("Adding Student " + name);
             //console.log({name,grade,email,subject,id,"status":"success"});
-            res.send({name,grade,email,subject,id,"status":"success"});
+
+            
+
+            res.send({name,grade,email,subject,id,"status":"success", "passlen" : passlen});
         });
     });
     
@@ -553,26 +561,34 @@ app.post("/loginStudent", (req,res)=>{
     let password = data.password;
 
     if(username != "" &&  password != ""){
-        let sql = `SELECT password,level FROM users WHERE username=\'${username}\'`;
+        let id, sql;
+        if(String(username).length <= 5){
+            id = Number(username);
+            sql = `SELECT username,password,level FROM users WHERE ID=${username}`;
+        }
+        else{
+            sql = `SELECT username,password,level FROM users WHERE username="${username}"`;
+        }
+        
+       
+        console.log(sql)
         db.all(sql, [], (err, rows) => {
             if (err) {
                 throw err;
             }
+            console.log(rows);
             try{
                 let hashPass;
-                if(rows[0]["level"] >= 3){
-                    hashPass = password;
-                }
-                else if(rows[0]["level"] <3){
-                    hashPass = md5(password);
-                }
-                else{
-                    hashPass = password;
-                }
+                //let loginCredName;
+               
+               
+                hashPass = md5(password);
+                
+             
                 try{
                     if(rows[0]["password"] == hashPass){
                         console.log(username + " accessed through the system");
-                        res.send("access");
+                        res.send({"msg": "access", "username" : rows[0]["username"]});
                     }
                     else{
                         console.log("access denied");
@@ -907,12 +923,12 @@ app.post("/checkRequestStatus",(req,res)=>{
 
         //tutor handler
         if(Number(level) >= 3 && Number(level) != 5){
-            sql = `SELECT * FROM requestTutors WHERE requestTo='${username}' AND valid!=0`
+            sql = `SELECT * FROM requestTutors WHERE requestTo='${username}' AND valid!=0 AND valid!=2`
             
         }
         //student handler
         else if(Number(level) < 3){
-            sql = `SELECT * FROM requestTutors WHERE requestFrom='${username}' AND valid!=0`
+            sql = `SELECT * FROM requestTutors WHERE requestFrom='${username}' AND valid!=0 AND valid!=2`
         }
         //admin handler
         else{
@@ -982,6 +998,62 @@ app.post("/cancelRequest", (req,res)=>{
     });
 
 });
+
+app.post("/acceptRequest", (req,res)=>{
+
+    var data = req.body;
+    var username = data["name"];
+    var requestID = data["requestID"];
+    var date = data["date"];
+
+
+    let sql = `UPDATE requestTutors SET valid=2 WHERE requestID=${requestID}`;
+    db.all(sql, [], (err, rows) => {
+        
+        sql=`SELECT * FROM requestTutors WHERE requestID=${requestID}`;
+        db.all(sql, [], (err, rows) => {
+            var requestInfo = rows[0];
+            sql=`SELECT * FROM pariedRoom`;
+            db.all(sql, [], (err, rows) => {
+                let id;
+                try{
+                    console.log(rows.length);
+                    id = rows.length + 1;
+                
+                }
+                catch(err){
+                    id = 1;
+                    console.log(err);
+                }
+               
+            
+                if(requestInfo["requestTo"] == username){
+                    sql =  `INSERT INTO pairedRoom(pairedTutor,pairedStudent,pairID,pairDate,pairSubject) VALUES("${requestInfo["requestTo"]}","${requestInfo["requestFrom"]}","${id}","${date}","${requestInfo["subject"]}")`
+                    db.all(sql, [], (err, rows) => {
+                        console.log("safe");
+                        res.send("safe");
+                    });
+                
+                }
+                else{
+                    res.send("Empty")
+                }
+
+
+            });
+
+
+            
+        
+        
+        });  
+
+    });
+
+
+
+});
+
 
 
 /**

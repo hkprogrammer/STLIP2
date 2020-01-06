@@ -1,0 +1,168 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(../fonts/montserrat/Montserrat-Light.otf);
+}
+
+body{
+    font-family: Montserrat;
+     background: rgb(22,90,80);
+   /* background: linear-gradient(90deg, rgba(22,90,80,1) 0%, rgba(175,177,95,1) 100%); */
+    background-size:100%;
+    
+    color:black;
+    width:100%;
+
+    font-size:1vw;
+}
+
+input{
+    
+    border-style: dashed black;
+}
+
+.row{
+    width:100%;
+}
+body h1, body h3,body h4{
+    font-weight:bold;
+}
+.box{
+    background-color:#1D262D;
+    box-shadow: 2px 2px 8px black;
+    margin:3%;
+}
+#welcome{
+    
+    height: 200px;
+}
+.navbar ul li a{
+    color:white;
+    text-decoration: none;
+    font-size: 27px;
+    
+}
+.horizontalBarLinks{
+    color:white;
+    text-decoration: none;
+    font-size: 27px;
+}
+hr{
+    border-top: 1px solid lightgrey;
+}
+.navbar ul li a:hover{
+    color:lightgrey;
+}
+.container{
+    padding: 2%;
+}
+#calendar{
+    width:70%;
+}
+#calendarbox{
+    height:90%;
+}
+
+.inverseBox{
+    background-color: rgb(252, 248, 227,0.5);
+    
+    box-shadow: 0.5px 0.5px 7px black;
+    border-radius: 2px;
+    color:black;    
+    
+}
+.SearchInverseBox{
+    background-color: #b3b3b3;
+    font-weight: bold;
+    box-shadow: 0.5px 0.5px 7px black;
+    border-radius: 2px;
+    color:black;    
+    
+}
+.infoCard{
+    width: 90%;
+    padding: 5px;
+    margin-left:5%;
+    margin-top: 5%;
+    min-height:100px;
+}
+.studentList{
+    width: 90%;
+    padding: 5px;
+    margin-left:5%;
+    margin-top: 5%;
+    min-height:100px;
+    font-weight: bold;
+    font-size: 18px;
+}
+.headingBtn{
+    cursor: pointer;
+}
+.subjectbuttons{
+    margin:2.5px;
+}
+.grade{
+    font-size:1rem;
+    font-weight: normal;
+}
+.btn-danger:hover{
+    cursor:pointer;
+}
+.addbox{
+    background-color:#465c6d;
+    box-shadow: 2px 2px 8px black;
+    margin-top: 4.5%;
+    margin-left:5%;
+    margin-right:5%;
+    border-radius: 15px;
+    width: 85%;
+    height: 100px;
+    align-content: center;
+    transition: width 1s, height 1s;
+    
+}
+.addbox:hover{
+    
+    width: 90%;
+    height: 115px;
+    background-color:#465c6d;
+    box-shadow: 2px 2px 8px black;
+    margin-top: 4.5%;
+    margin-left:5%;
+    margin-right:5%;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.addItem{
+    height: 80%;
+    transition: width 1s, height 1s;
+}
+.addItem:hover{
+    width: 9%;
+    height: 80%;
+    cursor:pointer;
+}
+
+
+a:hover{
+    cursor: pointer;
+}
+#Upcoming th{
+
+    font-size:80%;
+}
+
+.Articlecontents{
+    font-size: 20px;
+}
+#myTab{
+    font-size: 15px;
+}
+
+.selectorButton{
+    margin: 5px;
+}
+
+#largeContainer{
+    padding:30px;
+}

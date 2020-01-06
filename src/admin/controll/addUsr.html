@@ -6,6 +6,7 @@
     <meta contact="hitokikidahashi@student.midpac.edu">
     <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
     <style>
         .subjbut{
             background-color:#007bff;
@@ -26,10 +27,10 @@
 
     <div class="container">
         <div class="jumbotron">
-            <h2>Peer Tutor Sign-up</h2>
+            <h2>Study Buddies Peer Tutor Sign-up</h2>
             <hr>
-            <input type="name" id="name" placeholder="Student Name">
-            <select id="grade">
+            <label>Username: &nbsp;</label><input type="name" id="name" placeholder="Student Name"  autocomplete="off">
+            <label>Grade Level: &nbsp;</label><select id="grade"  autocomplete="off">
                 <option value="none">Grade Level</option>
                 <option value="-----">-----</option>
                 <option value=""></option>
@@ -39,10 +40,250 @@
                 <option value="11">Junior</option>
                 <option value="12">Senior</option>
             </select>
-            <input type="email" id="email" placeholder="Student Email" size="30px">
+            <label>Email:&nbsp;</label><input type="email" id="email" placeholder="Student Email" size="30px"  autocomplete="off">
             <br>
             <br>
-            <input type="subject" id="subject" placeholder="Subject">
+            <label>Password: &nbsp;</label><input type="password" placeholder="password" autocomplete="off" id="password">
+            <br>
+            <label>Confirm: &nbsp;</label><input type="password" placeholder="password" autocomplete="off" id="passwordConfirm">
+            <br>
+            <br>
+            <div id="courseList">
+
+            </div>
+
+            <br>
+            <div id="largeContainer">
+                    
+                <div class="row">
+                    <div class="col-12 SearchInverseBox">
+                     
+                     <div class="container">
+                         <div class="Search">
+                             <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                 <li class="nav-item">
+                                     <a class="nav-link active" id="Math-tab" data-toggle="tab" href="#Math" role="tab" aria-controls="Math" aria-selected="true">Math</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link" id="English-tab" data-toggle="tab" href="#English" role="tab" aria-controls="English" aria-selected="false">English</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link" id="SS-tab" data-toggle="tab" href="#SS" role="tab" aria-controls="SS" aria-selected="false">Social Studies</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link" id="WL-tab" data-toggle="tab" href="#WL" role="tab" aria-controls="WL" aria-selected="false">World Language</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link" id="Science-tab" data-toggle="tab" href="#Science" role="tab" aria-controls="Science" aria-selected="false">Science</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link" id="Electives-tab" data-toggle="tab" href="#Electives" role="tab" aria-controls="Electives" aria-selected="false">Electives</a>
+                                 </li>
+                             </ul>
+                             <div class="tab-content" id="myTabContent">
+                                 <div class="tab-pane fade show active" id="Math" role="tabpanel" aria-labelledby="Math-tab">
+                                    
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math I')">Integrated Math I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math II')">Integrated Math II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math III')">Integrated Math III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math IV')">Integrated Math IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math V')">Integrated Math V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Math V Advanced')">Integrated Math V Advanced</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Algebra I')">Algebra I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Geometry')">Geometry</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Algebra II')">Algebra II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Statistics')">Statistics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Pre-Calculus Foundations')">Pre-Calculus Foundations</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Pre-Calculus I')">Pre-Calculus I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Pre-Calculus II')">Pre-Calculus II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Calculus')">AP Calculus</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Math HL')">IB Math HL</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mathematical Studies A')">Mathematical Studies A</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mathematical Studies B')">Mathematical Studies B</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Adv. Mathematical Studies')">Adv. Mathematical Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Calculus')">Calculus</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Statistics')">AP Statistics</button>
+
+                                 </div>
+                                 <div class="tab-pane fade" id="English" role="tabpanel" aria-labelledby="English-tab">
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Freshman English')">Freshman English</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Sophomore English')">Sophomore English</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('The Written Voice')">The Written Voice</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Making a Personal Statement')">Making a Personal Statement</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Expository Writing')">Expository Writing</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Argument and Rhetoric')">Argument and Rhetoric</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Writing for Media')">Writing for Media</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Media Literacy')">Media Literacy</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Asian Voices in American Literature')">Asian Voices in American Literature</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('A Literary Look at Society')">A Literary Look at Society</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Perspectives on War')">Perspectives on War</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB English')">IB English</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('The Psyche in Literature')">The Psyche in Literature</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('The Individual\'s Journey in Literature')">The Individual's Journey in Literature</button>
+                                     
+
+                                 </div>
+                                 <div class="tab-pane fade" id="SS" role="tabpanel" aria-labelledby="SS-tab">
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('World Civilization')">World Civilization</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('US. History')">US. History</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hawaiian Studies')">Hawaiian Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Global Issues')">Global Issues</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Introduction to American Justice')">Introduction to American Justice</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Social Psychology')">Social Psychology</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Entrepreneurial Studies')">Entrepreneurial Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Entrepreneurial Lab')">Entrepreneurial Lab</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Museum Studies')">Museum Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Historic Preservation')">Historic Preservation</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Global Politics')">IB Global Politics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB History of the Americas')">IB History of the Americas</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB 20th Century History')">IB 20th Century History</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Introduction to Economics')">Introduction to Economics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Social Justice')">Social Justice</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('World Cultures')">World Cultures</button>
+                                 </div>
+                                 <div class="tab-pane fade" id="WL" role="tabpanel" aria-labelledby="WL-tab">
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Latin I')">Latin I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Latin II')">Latin II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Latin III')">Latin III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Japanese I')">Japanese I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Japanese II')">Japanese II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Japanese III')">Japanese III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Japanese IV')">Japanese IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Japanese V')">IB Japanese V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mandarin I')">Mandarin I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mandarin II')">Mandarin II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mandarin III')">Mandarin III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mandarin IV')">Mandarin IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mandarin V')">Mandarin V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Spanish I')">Spanish I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Spanish II')">Spanish II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Spanish III')">Spanish III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Spanish IV')">Spanish IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Spanish V')">Spanish V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hawaiian I')">Hawaiian I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hawaiian II')">Hawaiian II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hawaiian III')">Hawaiian III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AB Japanese')">AB Japanese</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AB Mandarin')">AB Mandarin</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AB French')">AB French</button>
+
+                                 </div>
+                                 <div class="tab-pane fade" id="Science" role="tabpanel" aria-labelledby="Science-tab">
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Science I')">Integrated Science I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Science II')">Integrated Science II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Integrated Science III')">Integrated Science III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Biology ')">IB Biology </button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Chemistry')">IB Chemistry</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Physics')">IB Physics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Environmental Science')">AP Environmental Science</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Biology')">AP Biology</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Chemistry')">AP Chemistry</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('AP Physics')">AP Physics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Aquaponics')">Aquaponics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Environmental Science')">Environmental Science</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Forensics')">Forensics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Human Anatomy and Physiology')">Human Anatomy and Physiology</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Oceanography')">Oceanography</button>
+
+                                 </div>
+                                 <div class="tab-pane fade" id="Electives" role="tabpanel" aria-labelledby="Electives-tab">
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Technology Explorations')">Technology Explorations</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Fundamentals of Coding for Mobile Technology I')">Fundamentals of Coding for Mobile Technology I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Fundamentals of Coding for Mobile Technology II')">Fundamentals of Coding for Mobile Technology II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mobile App Development I')">Mobile App Development I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Mobile App Development II')">Mobile App Development II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Robotics')">Robotics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Engineering Systems I')">Engineering Systems I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Engineering Systems II')">Engineering Systems II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Design Engineering')">Design Engineering</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Information Technology in a Global Society')">Information Technology in a Global Society</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Student Technology Leader')">Student Technology Leader</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Information Design Technology in a Global Society')">IB Information Design Technology in a Global Society</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Design Technology')">IB Design Technology</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Computer Science')">IB Computer Science</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Writing - Basic')">ELD Academic Writing - Basic</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Writing - Intermediate')">ELD Academic Writing - Intermediate</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Writing - Advanced')">ELD Academic Writing - Advanced</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Reading and Writing - Basic')">ELD Reading and Writing - Basic</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Reading and Writing - Intermediate')">ELD Reading and Writing - Intermediate</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Reading and Writing - Advanced')">ELD Reading and Writing - Advanced</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Listening and Speaking - Basic')">ELD Academic Listening and Speaking - Basic</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Listening and Speaking - Advanced')">ELD Academic Listening and Speaking - Advanced</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Skills - Basic')">ELD Academic Skills - Basic</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD Academic Skills - Intermediate')">ELD Academic Skills - Intermediate</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('ELD English 9/10')">ELD English 9/10</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Dance I')">Dance I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Dance II')">Dance II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Dance III')">Dance III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Dance IV')">Dance IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Dance V')">Dance V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Dance')">IB Dance</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contemporary Dance III')">Contemporary Dance III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contemporary Dance IV')">Contemporary Dance IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contemporary Dance V')">Contemporary Dance V</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contemporary Dance VI')">Contemporary Dance VI</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contemporary Dance VII')">Contemporary Dance VII</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Contextual Studies in Dance')">Contextual Studies in Dance</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hula I')">Hula I</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hula II')">Hula II</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hula III')">Hula III</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Hula IV')">Hula IV</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Orchestra')">Orchestra</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Symphonic Wind Ensemble ')">Symphonic Wind Ensemble </button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Jazz Band')">Jazz Band</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Studio Music')">Studio Music</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Vocal Ensemble')">Vocal Ensemble</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Music History')">Music History</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Music Theory')">Music Theory</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Music')">IB Music</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Acting')">Acting</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Advanced Theater Studies')">Advanced Theater Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Theater')">IB Theater</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Film Production')">Film Production</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Film')">IB Film</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Film Studies')">Film Studies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Digital Art Certificate Studio')">Digital Art Certificate Studio</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Visual Arts Certificate Studio')">Visual Arts Certificate Studio</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Visual Arts History')">Visual Arts History</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('IB Visual Arts')">IB Visual Arts</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('2D Art')">2D Art</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Animation ')">Animation </button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Ceramics')">Ceramics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Digital Art')">Digital Art</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Experimental Printmaking')">Experimental Printmaking</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Fundamentals of Digital and Visual Arts')">Fundamentals of Digital and Visual Arts</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Game Design')">Game Design</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Digital Photography')">Digital Photography</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Yearbook ')">Yearbook </button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Adv. Creative Technologies')">Adv. Creative Technologies</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Adv. Digital Photography')">Adv. Digital Photography</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Health')">Health</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Advanced Aquatics')">Advanced Aquatics</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Basic Aid and Fitness')">Basic Aid and Fitness</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Fundamentals of Physical Education')">Fundamentals of Physical Education</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Individual Lifetime Sports')">Individual Lifetime Sports</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Racquet Sports')">Racquet Sports</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Team Sports Survey')">Team Sports Survey</button>
+                                     <button class="btn btn-sm btn-info selectorButton" onclick="search('Strength Training')">Strength Training</button>
+                                 </div>
+                             </div>
+                         </div>
+
+                         
+
+                     </div>
+
+
+
+                    </div>
+                    <div class="col-4" id="tutorCards">
+                         
+                     </div>
+                </div>
+                 
+             </div> 
+
+
             <div style="border-color: black; border:1px;" id="subj">
                 <!--Fit in adding subjects, save in localstorage.-->
                 
@@ -56,7 +297,7 @@
             <br>
             <hr>
             <div class="row">
-                <div class="col-10"><a class="btn btn-info" onclick="submit()">Save & Submit</a></div>
+                <div class="col-10"><a class="btn btn-info" onclick="submit()">Submit</a></div>
                 <div class="col-2"><a class="btn btn-warning" onclick="reset()">Reset</a></div>
             </div>  
         
@@ -65,4 +306,7 @@
 
     <script src="addUsr.js">
     </script>
+     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>

@@ -28,41 +28,90 @@ function del(a){
   }
 
 }
-
+function removeElement(a){
+  let t = document.getElementById(String(a));
+  console.log({t,a})
+  t.remove();
+}
 
 function submit(){ 
   //name,grade level, email, subjects
   var name = document.getElementById("name").value;
   var grade = document.getElementById("grade").value;
   var email = document.getElementById("email").value;
+  var pass = document.getElementById("password").value;
+  var confirmPass = document.getElementById("passwordConfirm").value;
 
-  var s = "";
-  for(let i = 0; i<subjects.length;i++){
-      
-      if(i == subjects.length - 1){
-          s += subjects[i];
-      }
-      else{
-        s += subjects[i] + ","
-      }   
+  if(pass != confirmPass){
+    alert("Password does not match");
   }
-  console.log({name,email,grade,s});
-  var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText,"response")
+  else{
+    var s = "";
+    for(let i = 0; i<subjects.length;i++){
         
-        location.replace("success.html");
+        if(i == subjects.length - 1){
+            s += subjects[i];
+        }
+        else{
+          s += subjects[i] + ","
+        }   
     }
-  };
-  xhttp.open("POST", "/addTutor", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //xhttp.send("fname=Henry&lname=Ford");
-  
-  let sendcontent = `name=${name}&grade=${grade}&email=${email}&subject=${s}`;
-  xhttp.send(sendcontent)
+    
+    var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          //console.log(this.responseText,"response")
+          if((JSON.parse(this.responseText))["status"] == "success"){
+            localStorage.setItem("DetailResponse", JSON.stringify(this.responseText));
+            location.replace("success.html");
+          }
+          else{
+            console.log(this.responseText);
+            alert("An error occured, please try again.")
+          }
+          
+      }
+    };
+    xhttp.open("POST", "/addTutor", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //xhttp.send("fname=Henry&lname=Ford");
+    
+    let sendcontent = `name=${name}&grade=${grade}&email=${email}&subject=${s}&password=${confirmPass}`;
+    xhttp.send(sendcontent)
+  }
+ 
   
 
 }
 
+function reset(){
+  document.getElementById("name").value = "";
+  document.getElementById("grade").value = "none";
+  document.getElementById("email").value = "";
+  document.getElementById("password").value ="";
+  document.getElementById("passwordConfirm").value = "";
+
+  for(let i = 0; i<subjects.length;i++){
+    removeElement(subjects[i]);
+  }
+
+
+  subjects.splice(0,subjects.length);
+}
+
+
+async function search(n){
+  
+  if(subjects.length >= 3){
+    alert("You have selected too much courses, please only select three courses in total.")
+  }
+  else{
+    subjects.push(n);
+    let format = `<a class="btn btn-sm btn-primary subjbut" onclick="del(\`${n}\`)" id="${n}"><span style="color:white;">${n}</span></a>`;
+    document.getElementById("courseList").innerHTML += format;
+
+  }
+  
+  
+}
   

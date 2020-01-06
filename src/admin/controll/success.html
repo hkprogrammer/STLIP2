@@ -6,6 +6,7 @@
     <meta contact="hitokikidahashi@student.midpac.edu">
     <meta description="A fully developed system for Mid-Pacific Study Buddies"> 
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    
     <style>
         .subjbut{
             background-color:#007bff;
@@ -17,31 +18,61 @@
             background-color:#007bff;
             text-decoration: none;
         }
-        
+        span{
+            font-weight: bold;
+        }
+        th{
+            font-weight: normal;
+        }
     
     </style>
    
 </head>
-<body>
+<body onload="laodDetails()">
 
     <div class="container">
         <div class="jumbotron">
-            <h3>You have successfully registered a new peer tutor!</h2>
-            <br>
-            <h4>Would you like to submit another one?</h4>
-            <hr>
-            <div class="row">
-                <div class="col-6">
-                    <a href="addUsr.html" class="btn btn-sm btn-info">New</a>
-                </div>
-                <div class="col-6">
-                    
-                    <a onclick="javascript:window.close('','_parent','');" class="btn btn-sm btn-danger">Close</a>
-                    
-                </div>
+            
+            <div>
+                <h3>Congratulations! Your account is approved!</h3>
+                <hr>
+                <br>
+                <center>Here are some details of your account:</center>
+                <table style="margin-left:100px; width: 40%;">
+                    <tr>
+                        <th width="">Username: </th>
+                        <td width="60%"><span id="username"></span></td>
+                    </tr>
+                    <tr>
+                        <th>Your password:</th>
+                        <td><span id="password"></span></td>
+                    </tr>
+                    <tr>
+                        <th>Grade: </th>
+                        <td><span id="grade"></span></td>
+                    </tr>
+
+                    <tr>
+                        <th>Subjects</th>
+                        <td><span id="subjects"></span></td>
+                    </tr>
+                    <tr>
+                        <th>Study Buddies #:</th>
+                        <td><span id="id"></span></td>
+                    </tr>
+                   
+                </table>
+                <br>
+                <center><p>We recommend you to take a picture in order to remember your studdy buddies number.<br> You will need to use this number for logging into your account</p></center>
+                
+                
             </div>
+
+
+        
         </div>
     </div>
-
+    <script src="success.js">
+    </script>
     
 </body>

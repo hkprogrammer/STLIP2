@@ -234,7 +234,7 @@ function Editpublish(){
     let content = document.getElementById("Editcontent").value
     var s = new Date();
     var m = Number(s.getMonth()) + 1;
-    var todayDate = s.getFullYear() + "-" + m + "-" + s.getDate();
+    var todayDate = s.getFullYear() + "-" + m + "-" + s.getDate(); //Edit later for bug purpose, date format issue
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

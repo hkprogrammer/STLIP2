@@ -98,14 +98,25 @@ function loadTutorRequestDetail(){
 
                 </div>`;
             let v;
+
             if(r["valid"] == 0){
                 v = "Canceled"
+                document.getElementById("cancel").classList.add("disabled");
+                document.getElementById("accept").classList.add("disabled");
+                document.getElementById("cancel").onclick = "";
+                document.getElementById("accept").onclick = "";
+
             }
             else if(r["valid"] == 1){
                 v= "Pending"
+                
             }
-            else{
-                v=""
+            else if(r["valid"] == 2){
+                v = "Successfully Paired"
+                document.getElementById("cancel").classList.add("disabled");
+                document.getElementById("accept").classList.add("disabled");
+                document.getElementById("cancel").onclick = "";
+                document.getElementById("accept").onclick = "";
             }
 
             let listFormat = ` 
@@ -136,7 +147,7 @@ function loadTutorRequestDetail(){
             if(localStorage.getItem("username") == r["requestFrom"]){
                 document.getElementById("accept").classList.add("disabled")
             }
-       
+        
         }
     };
     xhttp.open("POST", "/loadRequestDetails", true);
@@ -155,7 +166,8 @@ function cancel(){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
         //document.getElementById("demo").innerHTML = this.responseText;
-           
+            
+           location.reload();
          
         }
     };
@@ -171,4 +183,66 @@ function cancel(){
 
 function accept(){
 
+    let id = document.getElementById("ID").innerHTML;
+
+    var d = new Date();
+    var m = Number(d.getMonth()) + 1;
+    var mM = String(m);
+    if(mM.length == 1){
+    mM = "0" + mM;
+    }
+    //console.warn(mM)
+    var y = String(d.getDate());
+    if(y.length == 1){
+    y = "0" + y;
+    }
+    
+    var f = d.getFullYear() + "-" + mM + "-" + y;
+   
+    
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+           
+        location.reload();
+         
+        }
+    };
+    xhttp.open("POST", "/acceptRequest", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `name=${localStorage.getItem("username")}&requestID=${id}&date=${f}`;
+    xhttp.send(att);
+
+
+
 }
+
+// let s = "";
+    // switch(d.getDay()){
+    // case 0:
+    //     s = "Sunday";
+    //     break
+    // case 1:
+    //     s = "Monday";
+    //     break
+    // case 2: 
+    //     s = "Tuesday";
+    //     break
+    // case 3:
+    //     s = "Wednesday";
+    //     break
+    // case 4:
+    //     s = "Thursday";
+    //     break
+    // case 5:
+    //     s = "Friday";
+    //     break
+    // case 6:
+    //     s = "Saturday"
+    //     break
+    // default:
+    //     s = "";
+    //     break
+    // }

@@ -1,5 +1,11 @@
 var name,email,password,confirmpassword,grade;
 
+function loadFramework(){
+    if(localStorage.getItem("username") != null){
+        window.open("main/","_self")
+    }
+}
+
 
 //getGlobalVars 0 is login, 1 is signup form;
 function getGlobalVars(n){
@@ -37,9 +43,11 @@ function login(){
         //document.getElementById("demo").innerHTML = this.responseText;
        
         console.log(this.responseText)
-        if(this.responseText == "access"){
+        var data = JSON.parse(this.responseText);
+        if(data["msg"] == "access"){
+
             localStorage.removeItem("username");
-            localStorage.setItem("username", name);
+            localStorage.setItem("username", data["username"]);
             location.replace("main/")
         }
         else{
