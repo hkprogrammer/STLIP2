@@ -42,43 +42,74 @@ function submit(){
   var pass = document.getElementById("password").value;
   var confirmPass = document.getElementById("passwordConfirm").value;
 
-  if(pass != confirmPass){
-    alert("Password does not match");
+  let splitEmail = email.split("");
+  let flag = false;
+  for(let i = 0; i < splitEmail.length;i++){
+    console.log(splitEmail[i])
+    if(splitEmail[i] == "m"){
+      let d = splitEmail.length - (i + 1);
+      let f = "";
+      for(let v = i; v<splitEmail.length;v++){
+          f += splitEmail[v];
+      }
+      console.log({f,i})
+      if(f == "midpac.edu"){
+        flag=true;
+        break
+      
+      }
+      else{
+
+      }
+
+    }
+  }
+
+  if(!flag){
+    alert("Email must be student email");
   }
   else{
-    var s = "";
-    for(let i = 0; i<subjects.length;i++){
-        
-        if(i == subjects.length - 1){
-            s += subjects[i];
-        }
-        else{
-          s += subjects[i] + ","
-        }   
+    if(pass != confirmPass){
+      alert("Password does not match");
     }
-    
-    var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          //console.log(this.responseText,"response")
-          if((JSON.parse(this.responseText))["status"] == "success"){
-            localStorage.setItem("DetailResponse", JSON.stringify(this.responseText));
-            location.replace("success.html");
+    else{
+      var s = "";
+      for(let i = 0; i<subjects.length;i++){
+          
+          if(i == subjects.length - 1){
+              s += subjects[i];
           }
           else{
-            console.log(this.responseText);
-            alert("An error occured, please try again.")
-          }
-          
+            s += subjects[i] + ","
+          }   
       }
-    };
-    xhttp.open("POST", "/addTutor", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    //xhttp.send("fname=Henry&lname=Ford");
-    
-    let sendcontent = `name=${name}&grade=${grade}&email=${email}&subject=${s}&password=${confirmPass}`;
-    xhttp.send(sendcontent)
+      
+      var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            //console.log(this.responseText,"response")
+            if((JSON.parse(this.responseText))["status"] == "success"){
+              localStorage.setItem("DetailResponse", JSON.stringify(this.responseText));
+              location.replace("success.html");
+            }
+            else{
+              console.log(this.responseText);
+              alert("An error occured, please try again.")
+            }
+            
+        }
+      };
+      xhttp.open("POST", "/addTutor", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      //xhttp.send("fname=Henry&lname=Ford");
+      
+      let sendcontent = `name=${name}&grade=${grade}&email=${email}&subject=${s}&password=${confirmPass}`;
+      xhttp.send(sendcontent)
+    }
   }
+
+
+  
  
   
 
