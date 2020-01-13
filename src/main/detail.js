@@ -48,6 +48,7 @@ function loadInformations(){
             //console.log(result[i])
             var data = result[i];
             var name = data["name"];
+            let fullname = name;
             var g = data["grade"];
             var s = data["subjects"];
             var id = data["id"];
@@ -95,7 +96,7 @@ function loadInformations(){
                 
             }
             let temp;
-            if(name == localStorage.getItem("username")){
+            if(fullname == localStorage.getItem("username")){
                 temp = `
                 <div class="row inverseBox infoCard" id=\"${name}\">
                 <div class="col-3">
@@ -104,7 +105,7 @@ function loadInformations(){
                 </div>
                 <div class="col-9">
                     
-                    <h3>${name}</h3><img src="../images/delete.png" class="btn btn-sm btn-danger" width="30px" id="` + name + "btn" +`">
+                    <h3>${name}</h3><img src="../images/delete.png" class="btn btn-sm btn-danger" width="30px" id="` + fullname + "btn" +`">
                     
                     <hr>
                     

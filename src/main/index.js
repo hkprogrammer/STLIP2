@@ -98,6 +98,13 @@ const requestTFormat = ` <tr>
 <td><div class="btn btn-sm btn-primary" style="cursor:pointer;">Go</div></td>
 </tr>`
 
+const privateMeetingFormat = `<tr>
+<th class="targetName" width="50%"></th>
+<td class="subject" width="40%">$</td>
+<td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetailsPrivateRoom()">Go</a></td>
+</tr>`
+
+
 async function del(n){
 
     var title = document.getElementsByClassName("Title")[n].innerHTML;
@@ -222,6 +229,100 @@ async function editArticle(n){
     document.getElementById("Edittitle").value = title
     document.getElementById("Editpostby").innerHTML = publisher
     document.getElementById("Editcontent").value = content;
+
+}
+
+async function loadPrivateMeetings(){
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            console.warn(this.responseText, "privateMeetings");   
+            let data = JSON.parse(this.responseText);
+
+            let format= "";
+
+            for(i=0;i<data.length;i++){
+                let e = data[i];
+                console.warn(e)
+                if(e["pairedStudent"] == localStorage.getItem("username")){
+                    //student handler
+                    var targetName = e["pairedTutor"];
+                    let subjectName = "";
+                    let s = e["pairSubject"].split(" ");
+                    let  displayname = (e["pairedTutor"].split(""))[0] + "." + e["tutorID"];
+
+                    if(s.length > 1){
+                        for(z=0;z<s.length;z++){
+                            if(Number(s[z].split("")[0]) <= 20){
+                                subjectName += s[z] + " "
+                                continue
+                            }
+                            else{subjectName += (String(s[z].split("")))[0];}
+                            
+                        }
+                    }
+                    format += `
+                    <tr>
+                    <th class="targetName" width="30%">${displayname}</th>
+                    <td class="subject" width="60%">${subjectName}</td>
+                    <td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetailsPrivateRoom(${e["pairID"]})">Go</a></td>
+                    </tr>` 
+                    console.log(format)
+                    
+
+
+
+                }
+                else if(e["pairedTutor"] == localStorage.getItem("username")){
+                    //tutor handler
+                    var targetName = e["pairedStudent"];
+                    let subjectName = "";
+                    let s = e["pairSubject"].split(" ");
+                    if(s.length > 1){
+                        for(z=0;z<s.length;z++){
+                            if(Number(s[z].split("")[0]) <= 20){
+                                subjectName += s[z] + " "
+                                continue
+                            }
+                            else{subjectName += (String(s[z].split("")))[0];}
+                            
+                        }
+                    }
+                    format += `
+                    <tr>
+                    <th class="targetName" width="50%">${targetName}</th>
+                    <td class="subject" width="40%">${subjectName}</td>
+                    <td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetailsPrivateRoom(${e["pairID"]})">Go</a></td>
+                    </tr>` 
+
+                    
+
+
+
+                }
+
+            }
+            console.log(format)
+            document.getElementById("privateMeeting").innerHTML = format;
+
+
+        }
+    };
+    xhttp.open("POST", "/loadPrivateSessions", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `username=${localStorage.getItem("username")}`;
+    xhttp.send(att);
+
+
+
+}
+function GoDetailsPrivateRoom(n){
+
+    localStorage.setItem("privateSessionID", n);
+    window.open("privateSessions.html", "_self");
+
 
 }
 
@@ -484,6 +585,7 @@ async function checkLevel(){
             displayArticle();
             loadSessions();
             checkTutorRequest();
+            loadPrivateMeetings();
         }
     };
     xhttp.open("POST", "/checkLevel", true);

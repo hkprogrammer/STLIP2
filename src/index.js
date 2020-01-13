@@ -1,9 +1,9 @@
 var name,email,password,confirmpassword,grade;
 
 function loadFramework(){
-    if(localStorage.getItem("username") != null){
-        window.open("main/","_self")
-    }
+    // if(localStorage.getItem("username") != null){
+    //     window.open("main/","_self")
+    // }
 }
 
 
@@ -32,7 +32,12 @@ function getGlobalVars(n){
     
 
 }
-
+var inputPassword = document.getElementById("password")
+inputPassword.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+     login();
+    }
+  });
 function login(){
     getGlobalVars(0);
 

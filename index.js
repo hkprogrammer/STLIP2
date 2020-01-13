@@ -1028,11 +1028,19 @@ app.post("/acceptRequest", (req,res)=>{
                
             
                 if(requestInfo["requestTo"] == username){
-                    sql =  `INSERT INTO pairedRoom(pairedTutor,pairedStudent,pairID,pairDate,pairSubject) VALUES("${requestInfo["requestTo"]}","${requestInfo["requestFrom"]}","${id}","${date}","${requestInfo["subject"]}")`
+
+                    sql = `SELECT ID FROM users WHERE username="${username}"`
                     db.all(sql, [], (err, rows) => {
                         console.log("safe");
-                        res.send("safe");
+                        sql =  `INSERT INTO pairedRoom(pairedTutor,pairedStudent,pairID,pairDate,pairSubject,tutorID) VALUES("${requestInfo["requestTo"]}","${requestInfo["requestFrom"]}","${id}","${date}","${requestInfo["subject"]}",${rows[0]["ID"]})`
+                        db.all(sql, [], (err, rows) => {
+                            console.log("safe");
+                            res.send("safe");
+                        });
                     });
+
+
+                   
                 
                 }
                 else{
@@ -1055,6 +1063,103 @@ app.post("/acceptRequest", (req,res)=>{
 });
 
 
+app.post("/loadPrivateSessions",(req,res)=>{
+    console.log("asd")
+    let data = req.body;
+    let username = data["username"];
+
+    //let sql = `SELECT * FROM pariedRoom WHERE pairedStudent`
+
+    let sql = `SELECT level,username FROM users WHERE username="${username}"`;
+    db.all(sql, [], (err, rows) => {
+        let person = rows[0];
+        if(Number(person["level"]) < 3){
+            sql = `SELECT * FROM pairedRoom WHERE pairedStudent="${person["username"]}"`
+        }
+        else if(Number(person["level"]) >= 3 && Number(person["level"] < 5)){
+            sql = `SELECT * FROM pairedRoom WHERE pairedTutor="${person["username"]}"`
+        }
+        
+        db.all(sql, [], (err, rows) => {
+            console.log(rows);
+            res.send(rows);
+        });
+    });
+
+});
+
+app.post("/loadRoomDetails", (req,res)=>{
+
+    var data = req.body;
+    var roomID = data["roomID"];
+    let sql = `SELECT * FROM pairedRoom WHERE pairID=${roomID}`
+    db.all(sql, [], (err, rows) => {
+        var d = {
+            "roomData" : rows[0]
+        };
+        let studentName = rows[0]["pairedStudent"];
+        let tutorName = rows[0]["pairedTutor"];
+        //fetch Students information
+        sql = `SELECT username,email,grade FROM users WHERE username="${studentName}"`;
+        db.all(sql, [], (err, rows) => {
+            d["studentInfo"] = rows[0];
+
+
+            //fetch Tutor information
+            sql = `SELECT username,email,grade,subjects,ID FROM users WHERE username="${tutorName}"`;
+            db.all(sql, [], (err, rows) => {
+               d["tutorInfo"] = rows[0];
+               console.log(d);
+               res.send(d)
+            });
+        });
+
+
+    });
+   
+});
+
+app.post("/loadPrivateSessionDate",(req,res)=>{
+
+    var data = (req.body)["roomID"];
+    
+    let sql = `SELECT date FROM pairedRoomDatesCollector WHERE roomID=${data}`;
+    console.log(sql)
+    db.all(sql, [], (err, rows) => {
+        console.log(rows)
+        let format = [];
+        for(var i = 0;i<rows.length;i++){
+            format.push(rows[i]["date"]);
+        }
+        format = removeDups(format);
+
+        res.send(format);
+    });
+
+
+
+});
+
+app.post("/submitDates", (req,res)=>{
+    var dates = ((req.body)["dates"]).split(",");
+    
+    let format = "";
+    for(let i=0; i<dates.length;i++){
+        if(i == (dates.length -1)){
+            format += dates[i]
+        }
+        else{
+            format += dates[i] + ",";
+        }
+       
+    }
+    
+    let sql = `INSERT INTO `
+
+
+
+
+})
 
 /**
  * db.all(sql, [], (err, rows) => {

@@ -1,5 +1,18 @@
 var listOfDate = [];
+var s = new Date();
+var m = Number(s.getMonth()) + 1;
+var mM = String(m);
+if(mM.length == 1){
+  mM = "0" + mM;
+}
+var y = String(s.getDate());
+if(y.length == 1){
+  y = "0" + y;
+}
+var f = s.getFullYear() + "-" + mM + "-" + y;
+console.log({s,f});
 
+let todayDate = new Date(f).valueOf();
 
 function startup(){
   var xhttp = new XMLHttpRequest();
@@ -10,11 +23,25 @@ function startup(){
       let rawDates = JSON.parse(this.responseText);
       
       for(i=0;i<rawDates.length;i++){
-        var temp = {
-          "title": "Session",
-          "start" : rawDates[i]
-        }  
-        listOfDate.push(temp)
+        let rawDateStamp = new Date(rawDates[i]).valueOf();
+        if(rawDateStamp >= todayDate){
+          //Future Day
+          var temp = {
+            "title": "Session",
+            "start" : rawDates[i]
+          }  
+          listOfDate.push(temp)
+
+          }
+          else if(rawDateStamp < todayDate){
+              //Past Day
+              
+          }
+          else{
+              //error
+              console.warn("err", todayDate,rawDateStamp);
+          }
+        
       }
       console.log(listOfDate)
       var calendarEl = document.getElementById('calendar');
@@ -82,9 +109,25 @@ function startup(){
                 s = "";
                 break
           }
-          localStorage.setItem("date",f);
-          localStorage.setItem("day",s);
-          window.open("detail.html", "_blank");
+
+          let letThisDate = new Date(f).valueOf();
+          if(letThisDate >= todayDate){
+              //Future Day
+              localStorage.setItem("date",f);
+              localStorage.setItem("day",s);
+              window.open("detail.html", "_blank");
+          }
+          else if(letThisDate < todayDate){
+              //Past Day
+              alert("Please select a future day")
+          }
+          else{
+              //error
+              console.warn("err", todayDate,letThisDate);
+          }
+
+
+          
           console.log(calendar);
           calendar.unselect()
           
