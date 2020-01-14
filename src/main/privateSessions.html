@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 
 </head>
-<body onload="loadDetail()">
+<body onload="loadDetail();displayArticle();">
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-12">
             <!--Left Navs-->
@@ -121,7 +121,15 @@
                         </div>
                         <div class="col container">
                             <!--Comments-->
-                            <h4 align="center">Tutor Commentary</h4>
+                            <h4 align="center">Commentary</h4>
+                            <article id="commentary" style="min-height: 50x;">
+
+                            </article>
+                            <center id="newPost">
+                                <div class="btn btn-info" style="cursor: pointer;" onclick="newPost()">Create a Comment</div>
+                            </center>
+                          
+                            
                         </div>
                         
                    </div>

@@ -1132,7 +1132,8 @@ app.post("/loadPrivateSessionDate",(req,res)=>{
 
 app.post("/submitDates", (req,res)=>{
     var dates = ((req.body)["dates"]).split(",");
-    var roomID = (req.body)["roomID"]
+    var data = req.body;
+    var roomID = data["RoomID"]
     let format = "";
     for(let i=0; i<dates.length;i++){
         if(i == (dates.length -1)){
@@ -1145,14 +1146,66 @@ app.post("/submitDates", (req,res)=>{
     }
     
    //
-   let sql = `INSERT INTO pairedRoomDateCollector(roomID,date) VALUES(${RoomID}, "${dates}")`
+   let sql = `INSERT INTO pairedRoomDatesCollector(roomID,date) VALUES(${roomID},"${dates}")`
+   console.log(sql);
    db.all(sql, [], (err, rows) => {
-        throw err;
+       console.log("safe")
+
+       sql = `SELECT * FROM pairedRoomDatesCollector WHERE roomID=${roomID}`;
+       db.all(sql, [], (err, rows) => {
+        res.send(rows);
+        });
+
+
+    });
+})
+
+
+app.post("/publishComment", (req,res)=>{
+
+    var data = req.body;
+    var content = data["content"];
+    var publisher = data["publisher"];
+    var date = data["date"];
+    var roomID = data["roomID"]
+
+    let sql = `INSERT INTO pairedRoomCommentary(roomID,content,publisher,date) VALUES(${roomID},"${content}","${publisher}","${date}")`
+    db.all(sql, [], (err, rows) => {
+        res.send("safe");
     });
 
 
+});
 
-})
+
+app.post("/displayComment", (req,res)=>{
+
+    var data = req.body;
+    var roomID = data["roomID"];
+    
+    let sql = `SELECT * FROM pairedRoomCommentary WHERE roomID=${roomID}`
+    console.log(sql)
+    db.all(sql, [], (err, rows) => {
+        res.send(rows)
+    });
+});
+
+app.delete("/deleteComment", (req,res)=>{
+
+    var data = req.body;
+    var content = data["content"];
+    var roomID = data["RoomID"];
+
+    let sql = `DELETE FROM pairedRoomCommentary WHERE roomID=${roomID} AND content="${content}"`
+    db.all(sql, [], (err, rows) => {
+        console.log(err, "safe");
+        res.send("safe")
+        
+    });
+
+});
+
+
 
 /**
  * db.all(sql, [], (err, rows) => {

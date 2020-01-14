@@ -259,14 +259,19 @@ async function loadPrivateMeetings(){
                                 subjectName += s[z] + " "
                                 continue
                             }
-                            else{subjectName += (String(s[z].split("")))[0];}
+                            else{
+                                subjectName += (String(s[z].split("")))[0];
+                            }
                             
                         }
+                    }
+                    else{
+                        subjectName = s[0];
                     }
                     format += `
                     <tr>
                     <th class="targetName" width="30%">${displayname}</th>
-                    <td class="subject" width="60%">${subjectName}</td>
+                    <td class="subject" width="60%" style="font-size:15px;">${subjectName}</td>
                     <td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetailsPrivateRoom(${e["pairID"]})">Go</a></td>
                     </tr>` 
                     console.log(format)

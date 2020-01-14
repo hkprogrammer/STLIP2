@@ -1,3 +1,95 @@
+var Base64 = {
+    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    encode: function(e) {
+        var t = "";
+        var n, r, i, s, o, u, a;
+        var f = 0;
+        e = Base64._utf8_encode(e);
+        while (f < e.length) {
+            n = e.charCodeAt(f++);
+            r = e.charCodeAt(f++);
+            i = e.charCodeAt(f++);
+            s = n >> 2;
+            o = (n & 3) << 4 | r >> 4;
+            u = (r & 15) << 2 | i >> 6;
+            a = i & 63;
+            if (isNaN(r)) {
+                u = a = 64
+            } else if (isNaN(i)) {
+                a = 64
+            }
+            t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+        }
+        return t
+    },
+    decode: function(e) {
+        var t = "";
+        var n, r, i;
+        var s, o, u, a;
+        var f = 0;
+        e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+        while (f < e.length) {
+            s = this._keyStr.indexOf(e.charAt(f++));
+            o = this._keyStr.indexOf(e.charAt(f++));
+            u = this._keyStr.indexOf(e.charAt(f++));
+            a = this._keyStr.indexOf(e.charAt(f++));
+            n = s << 2 | o >> 4;
+            r = (o & 15) << 4 | u >> 2;
+            i = (u & 3) << 6 | a;
+            t = t + String.fromCharCode(n);
+            if (u != 64) {
+                t = t + String.fromCharCode(r)
+            }
+            if (a != 64) {
+                t = t + String.fromCharCode(i)
+            }
+        }
+        t = Base64._utf8_decode(t);
+        return t
+    },
+    _utf8_encode: function(e) {
+        e=e.replace(/\r\n/g,"\n");
+        var t = "";
+        for (var n = 0; n < e.length; n++) {
+            var r = e.charCodeAt(n);
+            if (r < 128) {
+                t += String.fromCharCode(r)
+            } else if (r > 127 && r < 2048) {
+                t += String.fromCharCode(r >> 6 | 192);
+                t += String.fromCharCode(r & 63 | 128)
+            } else {
+                t += String.fromCharCode(r >> 12 | 224);
+                t += String.fromCharCode(r >> 6 & 63 | 128);
+                t += String.fromCharCode(r & 63 | 128)
+            }
+        }
+        return t
+    },
+    _utf8_decode: function(e) {
+        var t = "";
+        var n = 0;
+        var r = c1 = c2 = 0;
+        while (n < e.length) {
+            r = e.charCodeAt(n);
+            if (r < 128) {
+                t += String.fromCharCode(r);
+                n++
+            } else if (r > 191 && r < 224) {
+                c2 = e.charCodeAt(n + 1);
+                t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+                n += 2
+            } else {
+                c2 = e.charCodeAt(n + 1);
+                c3 = e.charCodeAt(n + 2);
+                t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+                n += 3
+            }
+        }
+        return t
+    }
+}
+
+
 var s = new Date();
 var m = Number(s.getMonth()) + 1;
 var mM = String(m);
@@ -18,13 +110,12 @@ var roomID;
 
 function loadDetail(){
 
-    var roomID = localStorage.getItem("privateSessionID");
-
+    roomID = localStorage.getItem("privateSessionID");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
         //document.getElementById("demo").innerHTML = this.responseText;
-            console.warn(this.responseText);   
+            //console.warn(this.responseText);   
             var data = JSON.parse(this.responseText);
             
             let s = data["studentInfo"]
@@ -162,7 +253,7 @@ function startup(){
     if (this.readyState == 4 && this.status == 200) {
       //document.getElementById("demo").innerHTML = this.responseText;
      if(this.responseText != ""){
-        console.log(this.responseText)
+        //console.log(this.responseText)
         let rawDates = JSON.parse(this.responseText);
         
         for(i=0;i<rawDates.length;i++){
@@ -172,7 +263,7 @@ function startup(){
           }  
           listOfDate.push(temp)
         }
-        console.warn(listOfDate)
+        //console.warn(listOfDate)
         var calendarEl = document.getElementById('calendar');
   
      
@@ -317,19 +408,27 @@ async function addDate(n){
 
 }
 async function submitDate(){
-    var roomID = document.getElementById("roomID").innerh
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("demo").innerHTML = this.responseText;
-            console.warn(this.responseText);   
-
-        }
-    };
-    xhttp.open("POST", "/submitDates", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    att = `dates=${submitDateList}&RoomID=${roomID}`
     
+    if(confirm("Submit?")){
+        roomID = localStorage.getItem("privateSessionID")
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            //document.getElementById("demo").innerHTML = this.responseText;
+               
+                location.reload();
+            }
+        };
+        xhttp.open("POST", "/submitDates", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        att = `dates=${submitDateList}&RoomID=${roomID}`
+        xhttp.send(att);
+    }
+    
+
+}
+async function del(n){
+
     document.getElementById(n).remove();
     for(i=0;i<submitDateList.length;i++){
         if(submitDateList[i] == n){
@@ -338,6 +437,166 @@ async function submitDate(){
     }
 }
 
+
+
+
+async function displayArticle(){
+    roomID = localStorage.getItem("privateSessionID")
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            var data = JSON.parse(this.responseText);
+            console.log({data});
+            var format = "";
+            let a = 0;
+            for(let i=0;i<data.length;i++){
+              
+               
+                var compressedImg = Base64.encode(data[i]["content"]);
+                console.log(compressedImg)
+                if(data[i]["publisher"] == localStorage.getItem("username")){
+                    console.log(data[i])
+                    format +=`
+                    <div class="box ArticleBoxCount">
+                    <div class="container">
+                       <div class="container Content" style="font-size:110%;">${data[i]["content"]}</div>
+                       <br>
+                       <div class="row"><div class="col-10">
+                       
+                       <sub class="ArticleDate">${data[i]["date"]}</sub>
+                       <br>
+                       <span>By:<i class="ArticlePublisher"> ${data[i]["publisher"]}</i></span>
+                       <br>
+                       </div><div class="col"><br><a class="btn btn-sm btn-danger" onclick="del('${compressedImg}')" id="${compressedImg}"><img src="../images/delete.png" width="15px;"></a></div></div>
+                    </div> 
+                    
+                </div>`
+                }
+                else{
+                    format += ` <div class="box ArticleBoxCount">
+                    <div class="container">
+                       <div class="container Content" style="font-size:110%;">${data[i]["content"]}</div>
+                       <br>
+                       <div class="row"><div class="col-10">
+                       
+                       <sub class="ArticleDate">${data[i]["date"]}</sub>
+                       <br>
+                       <span>By:<i class="ArticlePublisher"> ${data[i]["publisher"]}</i></span>
+                       <br>
+                       </div><div class="col"></div></div>
+                    </div> 
+                    
+                </div>`;
+                }
+                a++;
+            }
+
+            document.getElementById("commentary").innerHTML = format;
+
+        }
+    };
+    xhttp.open("POST", "/displayComment", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `roomID=${roomID}`;
+    xhttp.send(att);
+
+}
+function publish(){
+    try{
+        var username = localStorage.getItem("username");
+        if(username == "" || username == null){
+            throw "Empty username tag";
+        }
+        var roomID = localStorage.getItem("privateSessionID")
+        var content  = document.getElementById("content").value;
+        var d = new Date();
+        var m = Number(d.getMonth()) + 1;
+        var mM = String(m);
+        if(mM.length == 1){
+            mM = "0" + mM;
+        }
+        //console.warn(mM)
+        var y = String(d.getDate());
+        if(y.length == 1){
+            y = "0" + y;
+        }
+        console.log(y);
+        var f = d.getFullYear() + "-" + mM + "-" + y;
+        
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            //document.getElementById("demo").innerHTML = this.responseText;
+               
+                location.reload();
+            }
+        };
+        xhttp.open("POST", "/publishComment", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        att = `content=${content}&publisher=${username}&date=${f}&roomID=${roomID}`;
+        xhttp.send(att);
+
+            
+    }
+    catch(err){
+        console.log({err});
+    }
+  
+}
+const p = `<div class="box" id="newpost">
+<div class="container">
+    
+    <div class="row">
+        <div class="col-9">
+            <h3>New Comment</h3>
+        </div>
+    </div>
+   
+  
+    <textarea style="width:80%; min-height: 300px;" placeholder="content" id="content"></textarea>
+    
+    <br>
+    <br>
+    <div class="row">
+        <div class="col">
+            <!--Cancel-->
+            <a href="" class="btn btn-sm btn-danger">Cancel</a>
+        </div>
+        <div class="col">
+            <!--Submit-->
+            <a class="btn btn-sm btn-info" onclick="publish()">Comment</a>
+        </div>
+    </div>
+</div> 
+
+</div> `
+function newPost(){
+    document.getElementById("newPost").innerHTML = p;
+}
+
+async function del(n){
+    document.getElementById(n).remove();
+    var decompressedImgCur = Base64.decode(n);
+   
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+            if(this.responseText == "safe"){
+                location.reload();
+            }
+            else{
+                console.log(this.responseText)
+            }
+            
+        }
+    };
+    xhttp.open("DELETE", "/deleteComment", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    att = `content=${decompressedImgCur}&RoomID=${roomID}`
+    xhttp.send(att);
+}
 
 
 // var s = new Date();
