@@ -1015,17 +1015,7 @@ app.post("/acceptRequest", (req,res)=>{
             var requestInfo = rows[0];
             sql=`SELECT * FROM pariedRoom`;
             db.all(sql, [], (err, rows) => {
-                let id;
-                try{
-                    console.log(rows.length);
-                    id = rows.length + 1;
-                
-                }
-                catch(err){
-                    id = 1;
-                    console.log(err);
-                }
-               
+                let id = requestInfo["requestID"]
             
                 if(requestInfo["requestTo"] == username){
 
@@ -1142,7 +1132,7 @@ app.post("/loadPrivateSessionDate",(req,res)=>{
 
 app.post("/submitDates", (req,res)=>{
     var dates = ((req.body)["dates"]).split(",");
-    
+    var roomID = (req.body)["roomID"]
     let format = "";
     for(let i=0; i<dates.length;i++){
         if(i == (dates.length -1)){
@@ -1154,8 +1144,11 @@ app.post("/submitDates", (req,res)=>{
        
     }
     
-    let sql = `INSERT INTO `
-
+   //
+   let sql = `INSERT INTO pairedRoomDateCollector(roomID,date) VALUES(${RoomID}, "${dates}")`
+   db.all(sql, [], (err, rows) => {
+        throw err;
+    });
 
 
 

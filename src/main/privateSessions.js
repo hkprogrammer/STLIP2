@@ -13,6 +13,8 @@ console.log({s,f});
 
 var submitDateList = [];
 let todayDate = new Date(f).valueOf();
+var roomID;
+
 
 function loadDetail(){
 
@@ -28,7 +30,7 @@ function loadDetail(){
             let s = data["studentInfo"]
             let t = data["tutorInfo"];
             let r = data["roomData"];
-
+            roomID = r["pairID"];
 
             var sgrade = "";
            
@@ -315,7 +317,7 @@ async function addDate(n){
 
 }
 async function submitDate(){
-
+    var roomID = document.getElementById("roomID").innerh
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -326,11 +328,7 @@ async function submitDate(){
     };
     xhttp.open("POST", "/submitDates", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    att = `dates=${submitDateList}`;
-    xhttp.send(att);
-
-}
-async function del(n){
+    att = `dates=${submitDateList}&RoomID=${roomID}`
     
     document.getElementById(n).remove();
     for(i=0;i<submitDateList.length;i++){
