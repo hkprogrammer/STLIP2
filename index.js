@@ -562,7 +562,8 @@ app.post("/loginStudent", (req,res)=>{
 
     if(username != "" &&  password != ""){
         let id, sql;
-        if(String(username).length <= 5){
+        
+        if(Number(username) < 100){
             id = Number(username);
             sql = `SELECT username,password,level FROM users WHERE ID=${username}`;
         }
@@ -592,19 +593,19 @@ app.post("/loginStudent", (req,res)=>{
                     }
                     else{
                         console.log("access denied");
-                        res.send("access denied")
+                        res.send("Invalid Login")
                     }
                 }
                 catch(err){
                     console.log(err)
                     console.log("access denied");
-                    res.send("access denied")
+                    res.send("Invalid Login")
                 }
             }
             catch(err){
                 console.log(err)
                 console.log("access denied");
-                res.send("access denied")
+                res.send("Invalid Login")
             }
            
             

@@ -1,9 +1,9 @@
 var name,email,password,confirmpassword,grade;
 
 function loadFramework(){
-    // if(localStorage.getItem("username") != null){
-    //     window.open("main/","_self")
-    // }
+    if(localStorage.getItem("username") != null){
+        window.open("main/","_self")
+    }
 }
 
 
@@ -48,16 +48,17 @@ function login(){
         //document.getElementById("demo").innerHTML = this.responseText;
        
         console.log(this.responseText)
-        var data = JSON.parse(this.responseText);
-        if(data["msg"] == "access"){
-
+        
+        if(this.responseText != "Invalid Login"){
+            var data = JSON.parse(this.responseText);
             localStorage.removeItem("username");
             localStorage.setItem("username", data["username"]);
             location.replace("main/")
         }
         else{
+            console.log(data)
             //Invalid Login
-            document.getElementById("invalid").style.visibility = "visible";
+            document.getElementById("invalid").innerHTML = this.responseText;
         }
     }
     };
