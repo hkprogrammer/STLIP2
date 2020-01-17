@@ -153,6 +153,9 @@ async function request(n){
         //document.getElementById("demo").innerHTML = this.responseText;
        
         console.log(this.responseText)
+        if(this.responseText == "safe"){
+            location.replace("index.html");
+        }
         //location.reload();
        
     }
