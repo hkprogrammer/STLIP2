@@ -1056,7 +1056,7 @@ app.post("/acceptRequest", (req,res)=>{
 
 
 app.post("/loadPrivateSessions",(req,res)=>{
-    console.log("asd")
+   
     let data = req.body;
     let username = data["username"];
 
@@ -1073,7 +1073,7 @@ app.post("/loadPrivateSessions",(req,res)=>{
         }
         
         db.all(sql, [], (err, rows) => {
-            console.log(rows);
+           //console.log(rows);
             res.send(rows);
         });
     });
