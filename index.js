@@ -835,7 +835,7 @@ app.post("/searchTutor", (req,res)=>{
         for(let i=0;i<rows.length;i++){
             var person = rows[i];
             var subject = person["subjects"].split(",");
-            console.log(subject)
+            //console.log(subject)
             for(let v=0;v<subject.length;v++){
                 if(subject[v] == condition){
                     format.push(person);
@@ -844,6 +844,7 @@ app.post("/searchTutor", (req,res)=>{
             }
 
         }
+        //
         console.log(format)
         res.send(format);
 
