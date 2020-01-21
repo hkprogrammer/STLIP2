@@ -1,0 +1,45 @@
+<html>
+
+    <center>
+        <input type="text" id="subjectCategory" placeholder="subjectCategory">
+        <br>
+        <input type="text" id="subjectCourseName" placeholder="subjectCourseName">
+        <br>
+        <input type="number" id="subjectID" placeholder="ID">
+        <br>
+        <button onclick="submit()">Insert</button>
+    </center>
+
+    <script>
+        var inputPassword = document.getElementById("subjectCourseName")
+        inputPassword.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+             submit();
+            }
+        });
+        function submit(){
+            var subjCat = document.getElementById("subjectCategory").value;
+            var subjCourseName = document.getElementById("subjectCourseName").value;
+            var id = document.getElementById("subjectID").value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                //document.getElementById("demo").innerHTML = this.responseText;
+                    document.getElementById("subjectCourseName").value = "";
+                    document.getElementById("subjectCourseName").focus();
+                }
+            };
+            xhttp.open("POST", "/insertCourse", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            att = `subjectCategory=${subjCat}&subjectCourseName=${subjCourseName}&subjectID=${id}&passcode=insertCourse123!@#"`;
+            xhttp.send(att);
+
+
+
+        }
+    
+    </script>
+
+
+</html>

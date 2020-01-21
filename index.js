@@ -1208,10 +1208,38 @@ app.delete("/deleteComment", (req,res)=>{
 });
 
 
+app.post("/insertCourse/", (req,res)=>{
+
+    
+    var data = req.body;
+    var passcode = data["passcode"];
+    var subjectCategory = data["subjectCategory"]
+    var subjectCourseName = data["subjectCourseName"];
+    var subjectID = data["subjectID"];
+    console.log(passcode)
+
+    let sql = `INSERT INTO subjects(subjectCategory,subjectCourseName,subjectID) VALUES("${subjectCategory}","${subjectCourseName}",${subjectID})`
+    console.log(sql)
+    db.all(sql, [], (err, rows) => {
+        if(err){
+            console.log(err);
+        }
+
+
+        res.send("safe");
+    });
+   
+
+    
+
+});
+
 
 /**
  * db.all(sql, [], (err, rows) => {
-        throw err;
+        if(err){
+            console.log(err);
+        }
     });
  * 
  */
