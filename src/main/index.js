@@ -123,61 +123,61 @@ async function del(n){
 
 }
 
-async function loadSessions(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("demo").innerHTML = this.responseText;
-            console.warn(this.responseText);   
-            var data = JSON.parse(this.responseText);
+// async function loadSessions(){
+//     var xhttp = new XMLHttpRequest();
+//     xhttp.onreadystatechange = function() {
+//         if (this.readyState == 4 && this.status == 200) {
+//         //document.getElementById("demo").innerHTML = this.responseText;
+//             console.warn(this.responseText);   
+//             var data = JSON.parse(this.responseText);
 
-            let format = "";
-            let a = 0;
-            for(i=0;i<data.length;i++){
-                var d = new Date(String(data[i]["date"]));
-                var day = d.getDay();
-                let s = "";
-                switch(day){
-                    case 0:
-                        s = "Sun";
-                        break
-                    case 1:
-                        s = "Mon";
-                        break
-                    case 2: 
-                        s = "Tues";
-                        break
-                    case 3:
-                        s = "Wed";
-                        break
-                    case 4:
-                        s = "Thur";
-                        break
-                    case 5:
-                        s = "Fri";
-                        break
-                    case 6:
-                        s = "Sat"
-                        break
-                    default:
-                        s = "";
-                        break
-                }
-                format += `<tr>
-                <th class="date" width="50%">${data[i]["date"]}</th>
-                <td class="day" width="40%">${s}</td>
-                <td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetails(${a})">Go</a></td>
-                </tr>`
-                a++;
-            }
-            document.getElementById("Upcoming").innerHTML = format;
-        }
-    };
-    xhttp.open("POST", "/getSessionForPanels", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    att = `username=${localStorage.getItem("username")}`;
-    xhttp.send(att);
-}
+//             let format = "";
+//             let a = 0;
+//             for(i=0;i<data.length;i++){
+//                 var d = new Date(String(data[i]["date"]));
+//                 var day = d.getDay();
+//                 let s = "";
+//                 switch(day){
+//                     case 0:
+//                         s = "Sun";
+//                         break
+//                     case 1:
+//                         s = "Mon";
+//                         break
+//                     case 2: 
+//                         s = "Tues";
+//                         break
+//                     case 3:
+//                         s = "Wed";
+//                         break
+//                     case 4:
+//                         s = "Thur";
+//                         break
+//                     case 5:
+//                         s = "Fri";
+//                         break
+//                     case 6:
+//                         s = "Sat"
+//                         break
+//                     default:
+//                         s = "";
+//                         break
+//                 }
+//                 format += `<tr>
+//                 <th class="date" width="50%">${data[i]["date"]}</th>
+//                 <td class="day" width="40%">${s}</td>
+//                 <td><a class="btn btn-sm btn-primary" style="font-size: 9px;" onclick="GoDetails(${a})">Go</a></td>
+//                 </tr>`
+//                 a++;
+//             }
+//             document.getElementById("Upcoming").innerHTML = format;
+//         }
+//     };
+//     xhttp.open("POST", "/getSessionForPanels", true);
+//     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//     att = `username=${localStorage.getItem("username")}`;
+//     xhttp.send(att);
+// }
 
 async function editArticle(n){
 
@@ -310,6 +310,7 @@ async function loadPrivateMeetings(){
 
             }
             console.log(format)
+            document.getElementById("nullDispalyer").innerHTML = "";
             document.getElementById("privateMeeting").innerHTML = format;
 
 
@@ -588,7 +589,7 @@ async function checkLevel(){
                 console.log(this.responseText)
             }
             displayArticle();
-            loadSessions();
+            //loadSessions();
             checkTutorRequest();
             loadPrivateMeetings();
         }

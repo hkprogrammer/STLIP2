@@ -834,21 +834,85 @@ app.post("/searchTutor", (req,res)=>{
         let format = [];
         for(let i=0;i<rows.length;i++){
             var person = rows[i];
+
+            //splits subjects by comma into list
             var subject = person["subjects"].split(",");
             //console.log(subject)
+
+            //loop through find the corresponding subject
             for(let v=0;v<subject.length;v++){
                 if(subject[v] == condition){
                     format.push(person);
                     
                 }
             }
+            
+            
+
 
         }
         //
-        console.log(format)
-        res.send(format);
+        sql = `SELECT subjectCategory FROM subjects;`
+        db.all(sql, [], (err, rows) => {
+            for(let i=0;i<rows.length;i++){
+                //indexOf returns -1 when no such element found.
+                if(condition.indexOf(rows[i]["subjectCategory"]) > -1){
+                    sql = `SELECT subjectCourseName FROM subjects WHERE subjectCategory='${rows[i]["subjectCategory"]}'`
+                    break
+                }
+            }
+            console.log("Selector SQL Statement: " + sql);
+            if(sql == `SELECT subjectCategory FROM subjects;`){
+                console.log(format)
+                res.send(format);
+            }
+            else if(sql != `SELECT subjectCategory FROM subjects;`){
+                
+                db.all(sql, [], (err, rows) => {
+                    let categorySelector = rows;
+                    sql = `SELECT * FROM users WHERE Level=3`;
+                    db.all(sql, [], (err, rows) => {
+                    
+                        for(let i=0; i<rows.length;i++){
+                            var person = rows[i];
+
+                            //splits subjects by comma into list
+                            var subject = person["subjects"].split(",");
+
+
+                            for(let v=0;v<subject.length;v++){
+
+                                for(let z=0;z<categorySelector.length;z++){
+                                  
+                                    if(subject[v] == categorySelector[z]["subjectCourseName"]){
+                                        format.push(person);
+                                        
+                                    }
+                                }
+
+                                
+                            }
+                        }
+                        console.log(format)
+                        res.send(format);
+
+                    });
+                    
+
+                    
+                
+                });
+            }
+            else{
+                console.log(format)
+                res.send(format);
+            }
+            
+        });
+
 
     });
+    
 
 
 
@@ -1231,6 +1295,15 @@ app.post("/insertCourse/", (req,res)=>{
    
 
     
+
+});
+
+app.post("/searchAllTutor", (req,res)=>{
+
+    let sql = `SELECT * FROM users WHERE Level=3`
+    db.all(sql, [], (err, rows) => {
+        res.send(rows);
+    });
 
 });
 

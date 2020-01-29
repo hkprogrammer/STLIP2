@@ -46,6 +46,7 @@
                        <div class="col-8 SearchInverseBox">
                         
                         <div class="container">
+                            <h4>Search Tutor <a href="" class="btn btn-secondary" onclick="localStorage.setItem('course','Any')">List All Tutors</a></h4>
                             <div class="Search">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
@@ -509,14 +510,28 @@
 
 
                        </div>
-                       <div class="col-4" id="tutorCards">
-                            
+                       <div class="col-4">
+                            <h4 id="resultMessage">All Tutors Avaliable:</h4>
+                            <div id="tutorCards">
+                            </div>
+                        
                         </div>
                    </div>
                     
                 </div> 
+                <div id="tutorNotification" class="container" style="visibility: hidden;">
+                  <center>                
+                    <h4>You have signed in as a tutor, thus you will not able to request a tutor. If you still wish to, please signup a student account here: <a href="../register.html" target="_SELF">Signup a student account</a></h4>
+                  </center>
                 
+                <br>
+                <br>
+                <br>
+                <br>
+                <center><h4>For any extra assistance, please contact studdy buddies official.<br><br>studybuddies@student.midpac.edu</center></h4>
+                </div>
             </div>
+            
         </div>
         
         <script>

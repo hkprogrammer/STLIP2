@@ -88,6 +88,7 @@ function search(condition){
             if(format == ""){
                 format = "No Tutor Found"
             }
+            document.getElementById("resultMessage").innerHTML = "Search Results:"
             document.getElementById("tutorCards").innerHTML = format;
 
         }
@@ -167,3 +168,123 @@ async function request(n){
     xhttp.send(sendcontent);
 
 }
+
+
+function startup(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("demo").innerHTML = this.responseText;
+       
+        console.log(this.responseText)
+
+        var data = JSON.parse(this.responseText);
+
+       
+        let format = "";
+        for(let i=0;i<data.length;i++){
+            var person = data[i];
+
+            var name = person["username"];
+            var g = person["grade"]
+            var email = person["email"];
+            var s = person["subjects"]
+            var subjects = s.split(",");
+            var subjectsFormat = ""
+            var id = person["ID"];
+
+            var n = name.split("");
+
+            if(Number(id) < 10){
+                id = "0" + id;
+            }
+
+
+            var displayName = n[0] + "." + id;
+
+
+            var grade = "";
+            console.log(Number(g))
+            switch(Number(g)){
+                
+                case 9:
+                    grade = "Freshman";
+                    break
+                case 10:
+                    grade = "Sophomore";
+                    break
+                case 11:
+                    grade = "Junior";
+                    break
+                case 12: 
+                    grade = "Senior";
+                    break
+
+                default:
+                    grade = "Freshman";
+                    break
+            }
+
+
+            for(let z=0;z<subjects.length;z++){
+                if(subjects[z] == "" || subjects[z] == " "){
+                    subjectsFormat += ``
+                }
+                else{
+                    subjectsFormat += `<span class="btn btn-sm btn-primary subjectbuttons" style="color:white; font-weight:bold; font-size: 10px;">${subjects[z]}</span>`
+                }
+                
+            }
+            format += `
+            <div class="row SearchInverseBox infoCard" id=\"${name}\">
+                <div class="col-3">
+                    <img src="../images/avatar.jpg"width="100%">
+                    <span>${grade}</span>
+                </div>
+                <div class="col-9">
+                    
+                    <h3>${displayName}</h3>
+                    <div class="btn btn-sm btn-success" style="cursor:pointer;" onclick="request(\'${name}\')">Request Tutor</div>
+                    
+                    <hr>
+                    
+                        ${subjectsFormat}
+                </div>
+
+            </div>`;
+        }
+        if(format == ""){
+            format = "No Tutor Found"
+        }
+        
+        document.getElementById("tutorCards").innerHTML = format;
+
+
+        if(localStorage.getItem("level") == "LOW"){
+            //low level, user Level < 3
+
+
+            
+        }
+        else if(localStorage.getItem("level") == "HIGH"){
+            //high level, user level >= 3
+            document.getElementById("largeContainer").remove();
+            document.getElementById("tutorNotification").style.visibility = "visible";
+        }
+        
+
+
+        
+
+
+       
+       
+    }
+    };
+    xhttp.open("POST", "/searchAllTutor", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //xhttp.send("fname=Henry&lname=Ford");
+    let sendcontent = ``;
+    xhttp.send(sendcontent);
+}
+startup();

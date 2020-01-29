@@ -192,6 +192,14 @@ function loadDetail(){
                     tgrade = "Freshman";
                     break
             }
+            let Fsubj;
+            if(r["pairSubject"] == "Any"){
+                Fsubj = t["subjects"];
+            }
+            else{
+                Fsubj = r["pairSubject"]
+            }
+
             let tutorFormat = `
                 <div class="row SearchInverseBox infoCard" id=\"${t["username"]}\ tutorCard">
                     <div class="col-3">
@@ -205,7 +213,7 @@ function loadDetail(){
                         
                         <hr>
                         
-                            <div class="btn btn-sm btn-info">${r["pairSubject"]}</div>
+                            <div class="btn btn-sm btn-info">${Fsubj}</div>
                             <span style="font-size:15px;">${t["email"]}</span>
                     </div>
 
