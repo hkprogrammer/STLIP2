@@ -1302,6 +1302,7 @@ app.post("/searchAllTutor", (req,res)=>{
 
     var data = req.body;
     let sql = `SELECT * FROM users WHERE level=3`;
+    console.log(sql)
     db.all(sql, [], (err, rows) => {
         console.log(sql,rows)
         res.send(rows);
