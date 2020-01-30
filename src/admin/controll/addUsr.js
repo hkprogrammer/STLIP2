@@ -137,9 +137,14 @@ async function search(n){
     alert("You have selected too much courses, please only select eight courses in total.")
   }
   else{
-    subjects.push(n);
-    let format = `<a class="btn btn-sm btn-primary subjbut" onclick="del(\`${n}\`)" id="${n}"><span style="color:white;">${n}</span></a>`;
-    document.getElementById("courseList").innerHTML += format;
+    if(subjects.indexOf(n) == -1){
+      subjects.push(n);
+      let format = `<a class="btn btn-sm btn-primary subjbut" onclick="del(\`${n}\`)" id="${n}"><span style="color:white;">${n}</span></a>`;
+      document.getElementById("courseList").innerHTML += format;
+  }
+  else{
+      alert("Please do not select duplicates.")
+  }
 
   }
   
