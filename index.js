@@ -1300,9 +1300,10 @@ app.post("/insertCourse/", (req,res)=>{
 
 app.post("/searchAllTutor", (req,res)=>{
 
-    let sql = `SELECT * FROM users WHERE level=3`
+    var data = req.body;
+    let sql = `SELECT * FROM users WHERE level=3`;
     db.all(sql, [], (err, rows) => {
-        console.log(sql,rows);
+        console.log(sql,rows)
         res.send(rows);
     });
 
