@@ -93,7 +93,7 @@ function loadTutorRequestDetail(){
                         <hr>
                         
                             <div class="btn btn-sm btn-info">${r["subject"]}</div>
-                            <span style="font-size:15px;">${t["email"]}</span>
+                            
                     </div>
 
                 </div>`;

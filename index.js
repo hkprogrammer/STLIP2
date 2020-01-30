@@ -1308,6 +1308,48 @@ app.post("/searchAllTutor", (req,res)=>{
 });
 
 
+app.post("/requestTutorInformation", (req,res)=>{
+
+    var data = req.body;
+    var username = data["username"];
+
+    let sql = `SELECT username,level,email,grade,subjects,ID FROM users WHERE username="${username}"`;
+    db.all(sql, [], (err, rows) => {
+        if(err){
+            console.log(err);
+        }
+        res.send(rows);
+
+
+    });
+
+})
+
+
+app.post("/editTutor",(req,res)=>{
+
+    var data = req.body;
+    var username = data["name"];
+    var grade = data["grade"];
+    var email = data["email"];
+    var subject = data["subject"];
+    var ID = data["ID"];
+
+
+    let sql = `UPDATE users SET username="${username}",grade=${grade},email="${email}",subjects="${subject}" WHERE ID=${ID}`
+    console.log(sql)
+    db.all(sql, [], (err, rows) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send("safe");
+        }
+    });
+
+
+});
+
 /**
  * db.all(sql, [], (err, rows) => {
         if(err){

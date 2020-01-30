@@ -592,6 +592,20 @@ async function checkLevel(){
             //loadSessions();
             checkTutorRequest();
             loadPrivateMeetings();
+            if(localStorage.getItem("level") == "HIGH"){
+                document.getElementById("sideBar").innerHTML += `
+            <div class="col-lg-12 col-md-4 col-sm-4 col" id="accountSettings">
+                <div class="box" style="padding:10px;">
+                    <div class="container">
+                        <h5><strong>Account Settings</strong></h5>
+                        <hr>
+                        <table style="font-size: 100%">
+                            <a href="settings.html" class="btn btn-primary">My Tutor Account</a>
+                        </table>
+                    </div>
+                </div>
+            </div>`;
+            }
         }
     };
     xhttp.open("POST", "/checkLevel", true);

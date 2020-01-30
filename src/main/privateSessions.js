@@ -265,6 +265,17 @@ function startup(){
         let rawDates = JSON.parse(this.responseText);
         
         for(i=0;i<rawDates.length;i++){
+          let cases = rawDates[i].split(",");
+          if(cases.length > 0){
+              for(let z =0;z<cases.length;z++){
+                var temp = {
+                    "title": "PS",
+                    "start" : cases[z]
+                }
+                listOfDate.push(temp)
+                continue
+              }
+          }
           var temp = {
             "title": "PS",
             "start" : rawDates[i]
@@ -476,7 +487,7 @@ async function displayArticle(){
                        <br>
                        <span>By:<i class="ArticlePublisher"> ${data[i]["publisher"]}</i></span>
                        <br>
-                       </div><div class="col"><br><a class="btn btn-sm btn-danger" onclick="del('${compressedImg}')" id="${compressedImg}"><img src="../images/delete.png" width="15px;"></a></div></div>
+                       </div><div class="col"><br><div class="btn btn-sm btn-danger" onclick="del('${compressedImg}')" id="${compressedImg}"><img src="../images/delete.png" width="15px;"></div></div></div>
                     </div> 
                     
                 </div>`

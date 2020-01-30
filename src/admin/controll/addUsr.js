@@ -133,8 +133,8 @@ function reset(){
 
 async function search(n){
   
-  if(subjects.length >= 3){
-    alert("You have selected too much courses, please only select three courses in total.")
+  if(subjects.length >= 8){
+    alert("You have selected too much courses, please only select eight courses in total.")
   }
   else{
     subjects.push(n);
