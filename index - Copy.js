@@ -30,9 +30,7 @@ app.use(express.static('src'))
 function listening(){
     console.log("App runing on port", port);
 }
-app.get('/2',(req,res)=>{
-    res.send("Hello WOrld");
-})
+
 app.post("/check", (req,res) => {
     let name = req.body.name;
     let age = req.body.age;
